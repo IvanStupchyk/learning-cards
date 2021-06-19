@@ -16,7 +16,7 @@ function App() {
             <Navbar />
             <main>
                 <Switch>
-                    <Route path={'/learning-cards'} render={() => <div>Hi!</div>}/>
+                    <Route path={'/learning-cards/'} render={() => <div>Hi!</div>}/>
                     <Route exact path={'/login'} render={() => <Login/>}/>
                     <Route exact path={'/profile'} render={() => <Profile/>}/>
                     <Route exact path={'/new-password'} render={() => <EnterNewPassword/>}/>
