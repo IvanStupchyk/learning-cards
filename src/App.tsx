@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {TestComponents} from "./components/TestComponents/Test-components";
+import {Route, Switch} from "react-router-dom";
+import {Login} from "./components/Login/Login";
+import {Profile} from "./components/Profile/Profile";
+import {Error404} from "./components/Error404/Error404";
+import {EnterNewPassword} from "./components/EnterNewPassword/Enter-new-password";
+import {PasswordRecovery} from "./components/PasswordRecovery/Password-recovery";
+import {Registration} from "./components/Registration/Registration";
+import {Navbar} from "./components/Navbar/Navbar";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Navbar />
+            <main>
+                <Switch>
+                    <Route exact path={'/login'} render={() => <Login/>}/>
+                    <Route exact path={'/profile'} render={() => <Profile/>}/>
+                    <Route exact path={'/new-password'} render={() => <EnterNewPassword/>}/>
+                    <Route exact path={'/password-recovery'} render={() => <PasswordRecovery/>}/>
+                    <Route exact path={'/registration'} render={() => <Registration/>}/>
+                    <Route exact path={'/test-components'} render={() => <TestComponents/>}/>
+                    <Route path={'*'} render={() => <Error404/>}/>
+                </Switch>
+            </main>
+        </div>
+    );
 }
 
 export default App;

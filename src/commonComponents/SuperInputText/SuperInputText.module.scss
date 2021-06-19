@@ -1,0 +1,31 @@
+.superInput {
+
+}
+
+.errorInput {
+    border: 1px solid red;
+}
+
+.error {
+    color: red;
+}
+
+.errorSpan {
+    height: 30px;
+}
+
+.inputStyle {
+    margin: 5px;
+    padding: 2px;
+    box-sizing: border-box;
+    height: 30px;
+    width: 200px;
+    border: 1px solid #7b7b7b;
+    border-radius: 3px;
+    color: #000000;
+    transition: .2s;
+}
+
+.inputStyle:hover {
+    border-color: #000;
+}
