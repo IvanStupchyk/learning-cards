@@ -21,7 +21,6 @@ export const rootReducer = combineReducers({
     registration: registrationReducer,
 })
 
-
 export type AppStateType = ReturnType<typeof rootReducer>
 
 type AppActionsType = actionsNewPasswordType
