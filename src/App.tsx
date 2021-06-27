@@ -14,7 +14,7 @@ function App() {
     return (
         <div className="App">
             <Navbar />
-            <main>
+            <main className={'mainContainer'}>
                 <Switch>
                     <Route path={'/learning-cards/'} render={() => <div>Hi!</div>}/>
                     <Route exact path={'/login'} render={() => <Login/>}/>
