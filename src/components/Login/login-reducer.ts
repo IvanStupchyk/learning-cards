@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
-import {loginAPI} from "../../api/api";
+import {loginAPI, responseType} from "../../api/api";
+import {AppThunkType} from "../../state/redux-store";
 
 const initialStateLogin = {
     _id: '',
@@ -18,6 +19,7 @@ const initialStateLogin = {
 export const loginReducer = (state: initialLoginType = initialStateLogin, action: actionsLoginType) => {
     switch (action.type) {
         case "LOGIN/LOGIN-USER":
+            debugger
             return {...state, ...action.payload}
         default:
             return state
@@ -25,18 +27,19 @@ export const loginReducer = (state: initialLoginType = initialStateLogin, action
 }
 
 //actionC
-const loginUser = () => {
+const loginUser = (userData: responseType) => {
     return {
         type: 'LOGIN/LOGIN-USER',
-        payload: {}
+        payload: {...userData}
     }
 }
 
 //thunkC
-export const loginUserTC = (emailValue: string, passwordValue: string) => async (dispatch: Dispatch) => {
+export const loginUserTC = (emailValue: string, passwordValue: string): AppThunkType => async (dispatch) => {
     try {
         const response = await loginAPI.logIn(emailValue, passwordValue)
-        alert('krasava')
+        dispatch(loginUser(response.data))
+        alert(response.data._id)
     } catch (e) {
         alert(e)
     }
