@@ -19,7 +19,7 @@ function App() {
                     <Route path={'/learning-cards/'} render={() => <div>Hi!</div>}/>
                     <Route exact path={'/login'} render={() => <Login/>}/>
                     <Route exact path={'/profile'} render={() => <Profile/>}/>
-                    <Route exact path={'/new-password'} render={() => <EnterNewPassword/>}/>
+                    <Route path={'/new-password/:token'} render={() => <EnterNewPassword/>}/>
                     <Route exact path={'/password-recovery'} render={() => <PasswordRecovery/>}/>
                     <Route exact path={'/registration'} render={() => <Registration/>}/>
                     <Route exact path={'/test-components'} render={() => <TestComponents/>}/>
