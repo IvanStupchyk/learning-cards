@@ -1,17 +1,68 @@
-const initialStatePasswordRecovery = {
+import { AxiosError } from "axios";
+import {AppThunkType} from "../../state/redux-store";
+import {PasswordRecoveryAPI} from "./password-recovery-api";
 
+const initialStatePasswordRecovery = {
+    error: '',
+    loading: false,
+    success: false,
 }
 
-export const passwordRecoveryReducer = (state: initialPasswordRecoveryType = initialStatePasswordRecovery, action: actionsPasswordRecoveryType) => {
+//types
+export type initialPasswordRecoveryType = typeof initialStatePasswordRecovery
+
+const setError = (error: string) => ({type: "SET_ERROR", error} as const)
+const setLoading = (loading: boolean) => ({type: "SET_LOADING", loading} as const)
+const setSuccess = (success: boolean) => ({type: "SET_SUCCESS", success} as const)
+
+export type actionsPasswordRecoveryType = ReturnType<typeof setError> | ReturnType<typeof setLoading> | ReturnType<typeof setSuccess>
+
+export const passwordRecoveryReducer = (state: initialPasswordRecoveryType = initialStatePasswordRecovery, action: actionsPasswordRecoveryType): initialPasswordRecoveryType => {
     switch (action.type) {
-        default:
+        case "SET_ERROR": {
+            return {
+                ...state,
+                error: action.error,
+                loading: false,
+                success: false,
+            }
+        }
+        case "SET_LOADING": {
+            return {
+                ...state,
+                error: "",
+                loading: action.loading,
+                success: false,
+            }
+        }
+        case "SET_SUCCESS": {
+            return {
+                ...state,
+                error: "",
+                loading: false,
+                success: action.success,
+            }
+        }
+        default: {
             return state
+        }
     }
 }
 
 
-//types
-export type initialPasswordRecoveryType = {
+export const passwordRecoveryThunk = (email: string = "bovkunovichmarinacv@gmail.com"): AppThunkType => async (
+    dispatch) => {
+    dispatch(setLoading(true));
+    PasswordRecoveryAPI.forgot(email)
+        .then(res => {
+            if (!res.error) {
+                console.log(res.error)
+            } else {
+                console.log("Not errors")
+            }
+        })
+        .catch((error: AxiosError) => {
+            console.log(error)
+        })
+};
 
-}
-export type actionsPasswordRecoveryType = any
