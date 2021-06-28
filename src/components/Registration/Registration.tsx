@@ -2,6 +2,8 @@ import React, {ChangeEvent, useState} from 'react';
 import s from './Registration.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../state/redux-store";
+import {setRegistrationTC} from "./registration-reducer";
+import { Redirect } from 'react-router-dom';
 
 export const Registration = () => {
     const [email, setEmail] = useState<string>('')
@@ -20,6 +22,27 @@ export const Registration = () => {
 
     const onChangeCheckPassword = (e: ChangeEvent<HTMLInputElement>) => {
         setCheckPassword(e.currentTarget.value)
+    }
+
+    const onRegistration=()=>{
+        if(email === '' || password === ''){
+            alert('Field is required')
+        }
+        if (password !== checkPassword){
+            alert('wrong password')
+        }
+        else {
+            dispatch(setRegistrationTC(email, password))
+            setEmail('')
+            setPassword('')
+            setCheckPassword('')
+        }
+    }
+
+    if(isRegistration){
+        return  (
+            <Redirect to={'/login'}/>
+        )
     }
 
     return (
@@ -44,7 +67,7 @@ export const Registration = () => {
             </div>
             <div className={s.btn}>
                 <a className={s.btnCancel}>Cancel</a>
-                <a className={s.btnRegister}>Register</a>
+                <a className={s.btnRegister} onClick={onRegistration}>Register</a>
             </div>
         </div>
     )
