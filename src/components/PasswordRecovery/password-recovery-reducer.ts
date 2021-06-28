@@ -11,15 +11,15 @@ const initialStatePasswordRecovery = {
 //types
 export type initialPasswordRecoveryType = typeof initialStatePasswordRecovery
 
-const setError = (error: string) => ({type: "SET_ERROR", error} as const)
-const setLoading = (loading: boolean) => ({type: "SET_LOADING", loading} as const)
-const setSuccess = (success: boolean) => ({type: "SET_SUCCESS", success} as const)
+const setError = (error: string) => ({type: "password-recovery/SET_ERROR", error} as const)
+const setLoading = (loading: boolean) => ({type: "password-recovery/SET_LOADING", loading} as const)
+const setSuccess = (success: boolean) => ({type: "password-recovery/SET_SUCCESS", success} as const)
 
 export type actionsPasswordRecoveryType = ReturnType<typeof setError> | ReturnType<typeof setLoading> | ReturnType<typeof setSuccess>
 
 export const passwordRecoveryReducer = (state: initialPasswordRecoveryType = initialStatePasswordRecovery, action: actionsPasswordRecoveryType): initialPasswordRecoveryType => {
     switch (action.type) {
-        case "SET_ERROR": {
+        case "password-recovery/SET_ERROR": {
             return {
                 ...state,
                 error: action.error,
@@ -27,7 +27,7 @@ export const passwordRecoveryReducer = (state: initialPasswordRecoveryType = ini
                 success: false,
             }
         }
-        case "SET_LOADING": {
+        case "password-recovery/SET_LOADING": {
             return {
                 ...state,
                 error: "",
@@ -35,7 +35,7 @@ export const passwordRecoveryReducer = (state: initialPasswordRecoveryType = ini
                 success: false,
             }
         }
-        case "SET_SUCCESS": {
+        case "password-recovery/SET_SUCCESS": {
             return {
                 ...state,
                 error: "",

@@ -6,8 +6,8 @@ import {
     passwordRecoveryReducer
 } from "../components/PasswordRecovery/password-recovery-reducer";
 import {
-    actionsNewPasswordType,
-    enterNewPasswordReducer
+    actionsSetNewPasswordType,
+    setNewPasswordReducer
 } from "../components/EnterNewPassword/enter-new-password-reducer";
 import {actionsProfileType, profileReducer} from "../components/Profile/profile-reducer";
 import {actionsRegistrationType, registrationReducer} from "../components/Registration/registration-reducer";
@@ -16,14 +16,14 @@ import {actionsRegistrationType, registrationReducer} from "../components/Regist
 export const rootReducer = combineReducers({
     login: loginReducer,
     PasswordRecovery: passwordRecoveryReducer,
-    newPassword: enterNewPasswordReducer,
+    newPassword: setNewPasswordReducer,
     profile: profileReducer,
     registration: registrationReducer,
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-type AppActionsType = actionsNewPasswordType
+type AppActionsType = actionsSetNewPasswordType
     | actionsLoginType
     | actionsPasswordRecoveryType
     | actionsProfileType

@@ -7,7 +7,7 @@ import {passwordRecoveryThunk} from "./password-recovery-reducer";
 export const PasswordRecovery = () => {
     const [email, setEmail] = useState<string>("bovkunovichmarinacv@gmail.com")
     const dispatch = useDispatch()
-    const sendLetter = (email: string) => {
+    const sendLetter = () => {
         dispatch(passwordRecoveryThunk(email))
     }
 
@@ -21,7 +21,7 @@ export const PasswordRecovery = () => {
             <h2 className={styles.header}>Forgot your password?</h2>
             <input type="email" placeholder={'Email'} onChange={inputEmail}/>
             <p className={styles.textAction}>Enter your email address and we will send you further instructions</p>
-            <button onClick={() => {sendLetter(email)}}>Send Instructions</button>
+            <button onClick={sendLetter}>Send Instructions</button>
             <p className={styles.textRememberPassword}>Did you remember your password?</p>
             <NavLink to="/login" activeClassName={styles.login}>Try logging in</NavLink>
         </div>

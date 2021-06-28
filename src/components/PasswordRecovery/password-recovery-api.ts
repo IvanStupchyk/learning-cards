@@ -21,7 +21,7 @@ export const PasswordRecoveryAPI = {
             message: `
 <div style="background-color: lime; padding: 15px">
 password recovery link: 
-<a href='http://localhost:3000/#/set-new-password/$token$'>link</a>
+<a href='http://localhost:3000/learning-cards#/new-password/$token$'>link</a>
 </div>`
         });
         return response.data;
