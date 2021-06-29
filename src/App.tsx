@@ -9,6 +9,7 @@ import {EnterNewPassword} from "./components/EnterNewPassword/Enter-new-password
 import {PasswordRecovery} from "./components/PasswordRecovery/Password-recovery";
 import {Registration} from "./components/Registration/Registration";
 import {Navbar} from "./components/Navbar/Navbar";
+import {CheckEmail} from "./components/PasswordRecovery/ChekEmail";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Route exact path={'/profile'} render={() => <Profile/>}/>
                     <Route path={'/new-password/:token'} render={() => <EnterNewPassword/>}/>
                     <Route exact path={'/password-recovery'} render={() => <PasswordRecovery/>}/>
+                    <Route path={'/password-recovery-check-email/:email'} render={() => <CheckEmail/>}/>
                     <Route exact path={'/registration'} render={() => <Registration/>}/>
                     <Route exact path={'/test-components'} render={() => <TestComponents/>}/>
                     <Route path={'*'} render={() => <Error404/>}/>
