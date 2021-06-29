@@ -33,15 +33,16 @@ h1 {
     align-items: start;
 
     &:nth-child(1) {
-      margin-bottom: 25px;
+      margin-bottom: 10px;
     }
 
     &:nth-child(2) {
-      margin-bottom: 50px;
+      margin-bottom: 35px;
     }
 
     input {
       padding: 3px;
+      margin-bottom: 3px;
       box-sizing: border-box;
       font-size: 16px;
       color: #2D2E46;
@@ -93,6 +94,16 @@ h1 {
   justify-content: center;
   font-size: 16px;
   font-family: SF UI Display, sans-serif;
+}
+
+.errorEmailPasswordMessage {
+  height: 15px;
+  color: red;
+  font-size: 13px;
+  font-family: SF UI Display, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .errorMessageContainer {
