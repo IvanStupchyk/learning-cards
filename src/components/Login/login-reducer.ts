@@ -1,8 +1,8 @@
-import {Dispatch} from "redux";
 import {loginAPI, responseType} from "../../api/api";
 import {AppThunkType} from "../../state/redux-store";
 
-const initialStateLogin = {
+
+const initialStateLogin: initialLoginType = {
     _id: '',
     email: '',
     name: '',
@@ -13,13 +13,15 @@ const initialStateLogin = {
     isAdmin: false,
     verified: false,
     rememberMe: false,
-    error: null
+    error: null,
+    loadingRequest: false
 }
 
 export const loginReducer = (state: initialLoginType = initialStateLogin, action: actionsLoginType) => {
     switch (action.type) {
         case "LOGIN/LOGIN-USER":
-            debugger
+            return {...state, ...action.payload}
+        case 'LOGIN/LOADING-REQUEST':
             return {...state, ...action.payload}
         default:
             return state
@@ -33,15 +35,24 @@ const loginUser = (userData: responseType) => {
         payload: {...userData}
     }
 }
+const loadingRequest = (loadingRequest: boolean) => {
+    return {
+        type: 'LOGIN/LOADING-REQUEST',
+        payload: {loadingRequest}
+    }
+}
 
 //thunkC
 export const loginUserTC = (emailValue: string, passwordValue: string): AppThunkType => async (dispatch) => {
+    dispatch(loadingRequest(true))
     try {
         const response = await loginAPI.logIn(emailValue, passwordValue)
         dispatch(loginUser(response.data))
         alert(response.data._id)
     } catch (e) {
-        alert(e)
+        alert('beda')
+    } finally {
+        dispatch(loadingRequest(false))
     }
 }
 
@@ -60,5 +71,7 @@ export type initialLoginType = {
     verified: boolean
     rememberMe: boolean
     error: string | null
+    loadingRequest: boolean
 }
 export type actionsLoginType = ReturnType<typeof loginUser>
+    | ReturnType<typeof loadingRequest>

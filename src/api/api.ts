@@ -2,10 +2,7 @@ import axios from 'axios'
 
 const instance = axios.create({
     withCredentials: true,
-    baseURL: 'http://localhost:7542/2.0/',
-    // headers: {
-    //     'API-KEY': '528fa1c0-cacc-47ff-ae93-32ce73ccde7f'
-    // }
+    baseURL: 'https://neko-back.herokuapp.com/2.0/'
 })
 
 export type responseType = {
