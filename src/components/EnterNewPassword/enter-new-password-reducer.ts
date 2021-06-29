@@ -59,10 +59,15 @@ export const setNewPasswordThunk = (password: string, token: string): AppThunkTy
                 console.log(res.error)
             } else {
                 console.log("Not errors")
+                dispatch(setSuccess(true))
             }
         })
         .catch((error: AxiosError) => {
             console.log(error)
+            dispatch(setSuccess(false))
+        })
+        .finally(() => {
+            dispatch(setLoading(false))
         })
 };
 
