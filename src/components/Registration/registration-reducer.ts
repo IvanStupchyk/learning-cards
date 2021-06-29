@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {authAPI} from "./RegistrationAPI";
+import {AppThunkType} from "../../state/redux-store";
 
 const initialStateRegistration = {
     isRegistration: false
@@ -29,7 +30,7 @@ export const setRegistrationAC = (isRegistration: boolean) => ({
     type: 'REGISTRATION/SET-REGISTRATION', isRegistration
 } as const)
 
-export const setRegistrationTC = (email: string, password: string) => (dispatch: Dispatch<actionsRegistrationType>) => {
+export const setRegistrationTC = (email: string, password: string):AppThunkType => (dispatch: Dispatch<actionsRegistrationType>) => {
     authAPI.register(email, password)
         .then(res => {
             dispatch(setRegistrationAC(true))

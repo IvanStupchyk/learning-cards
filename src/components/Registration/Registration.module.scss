@@ -1,3 +1,10 @@
+.main{
+  background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
 .registrationContainer {
   padding: 25px;
   box-sizing: border-box;
@@ -65,6 +72,30 @@ label {
   margin-bottom: 24px;
 }
 
+
+.password{
+  position: relative;
+}
+
+.passwordControl {
+  position: absolute;
+  top: 20px;
+  right: 6px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.errorContainer{
+  height: 22px;
+}
+
+.errorMessage{
+  color: red;
+  padding: 0;
+  margin: 0;
+}
+
 .btn {
   width: 100%;
   font-family: SF UI Display;
@@ -97,3 +128,4 @@ label {
   border-radius: 30px;
   cursor: pointer;
 }
+
