@@ -1,5 +1,18 @@
+body {
+  background: linear-gradient(180deg, #E6D4DE, #9890C7);
+  height: 100vh;
+}
+
 .App {
   text-align: center;
+}
+
+.mainContainer {
+  padding: 0 10px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .App-logo {
