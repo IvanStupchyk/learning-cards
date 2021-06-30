@@ -3,8 +3,8 @@ import styles from './Enter-new-password.module.scss'
 import {useDispatch} from "react-redux";
 import {Redirect, useParams} from "react-router-dom";
 import {setNewPasswordThunk} from "./enter-new-password-reducer";
-import noView from "../../image/no-view.svg"
-import view from "../../image/view.svg"
+import noView from "../../media/password/no-view.svg"
+import view from "../../media/password/view.svg"
 
 export const EnterNewPassword = () => {
     const [password, setPassword] = useState<string>("")

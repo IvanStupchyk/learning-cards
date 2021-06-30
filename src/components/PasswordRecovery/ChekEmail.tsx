@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './Password-recovery.module.scss'
-import checkEmail from '../../image/checkEmail.svg'
+import checkEmail from '../../media/password/checkEmail.svg'
 import {useParams} from "react-router-dom";
 
 export const CheckEmail = () => {
