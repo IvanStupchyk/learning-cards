@@ -11,12 +11,15 @@ export const Navbar = () => {
             <div className={`${s.item} ${s.active}`}>
                 <NavLink to="/login" activeClassName={s.activeLink}>login</NavLink>
             </div>
-            <div className={s.item}>
-                <NavLink to="/new-password" activeClassName={s.activeLink}>new password</NavLink>
-            </div>
+            {/*<div className={s.item}>*/}
+            {/*    <NavLink to="/new-password" activeClassName={s.activeLink}>new password</NavLink>*/}
+            {/*</div>*/}
             <div className={s.item}>
                 <NavLink to="/password-recovery" activeClassName={s.activeLink}>password recovery</NavLink>
             </div>
+            {/*<div className={s.item}>*/}
+            {/*    <NavLink to="/password-recovery-check-email" activeClassName={s.activeLink}>check email</NavLink>*/}
+            {/*</div>*/}
             <div className={s.item}>
                 <NavLink to="/registration" activeClassName={s.activeLink}>registration</NavLink>
             </div>
