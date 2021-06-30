@@ -1,15 +1,22 @@
-import React, {ChangeEvent, useState} from "react";
-import styles from './Password-recovery.module.scss'
+import React, {ChangeEvent, FocusEvent, useState} from "react";
+import st from './Password-recovery.module.scss'
 import {NavLink, Redirect} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {passwordRecoveryThunk} from "./password-recovery-reducer";
-import {AppStateType} from "../../state/redux-store";
+
+import s from "../Login/Login.module.scss";
+import {InputContainer} from "../../common/InputContainer/InputContainer";
+import {emailValidation} from "../../common/validation/EmailValidation";
+import {HeaderEnterApp} from "../../common/HeaderEnterApp/HeaderEnterApp";
+import {BlueButton} from "../../common/BlueButton/BlueButton";
 
 export const PasswordRecovery = () => {
-    const [email, setEmail] = useState<string>("bovkunovichmarinacv@gmail.com")
+    const [email, setEmail] = useState<string>('bovkunovichmarinacv@gmail.com')
     const [sendEmail, setSendEmail] = useState<boolean>(false)
-    const [error, setError] = useState<string>("")
+    const [error, setError] = useState<string>('')
     const [disabledButton, setDisabledButton] = useState<boolean>(true)
+    // const [emailValue, setEmailValue] = useState<string>('')
+    const disabledBtnSubmit = !email
     const dispatch = useDispatch()
     const sendLetter = () => {
         dispatch(passwordRecoveryThunk(email))
@@ -18,19 +25,14 @@ export const PasswordRecovery = () => {
 
     const inputEmail = (event: ChangeEvent<HTMLInputElement>) => {
         setEmail(event.currentTarget.value)
-        if (validateEmail(event.currentTarget.value)) {
+        if (emailValidation(event.currentTarget.value)) {
             setError("")
             setDisabledButton(false)
         }
     }
 
-    const validateEmail = (email: string): boolean => {
-        const re = /\S+@\S+\.\S+/;
-        return re.test(email)
-    }
-
-    const checkEmail = (email: string) => {
-        if (validateEmail(email)) {
+    const checkEmailOnBlur = (e: FocusEvent<HTMLInputElement>) => {
+        if (emailValidation(e.currentTarget.value)) {
             setError("")
             setDisabledButton(false)
         } else {
@@ -43,20 +45,30 @@ export const PasswordRecovery = () => {
         return <Redirect to={`/password-recovery-check-email/${email}`} />
     }
 
-    const buttonClassName = disabledButton ? `${styles.disable}` : ''
+    const buttonClassName = disabledButton ? `${st.disable}` : ''
 
     return (
-        <div className={styles.container}>
-            <div><h1 className={styles.header}>It-incubator</h1></div>
-            <h2 className={styles.header}>Forgot your password?</h2>
-            <div>
-                <input type="email" placeholder="Email" onChange={inputEmail} onBlur={() => {checkEmail(email)}} />
-                <div className={styles.error}><label>{error}</label></div>
-            </div>
-            <p className={styles.textAction}>Enter your email address and we will send you further instructions</p>
+        <div className={s.authPageContainer}>
+            <HeaderEnterApp title={'Forgot your password?'}/>
+            <InputContainer
+                placeholder={'Email'}
+                changeValue={inputEmail}
+                errorMessage={error}
+                typeInput={'email'}
+                onBlur={checkEmailOnBlur}
+                value={email}
+            />
+            <p className={st.textAction}>Enter your email address and we will send you further instructions</p>
+
+            <BlueButton
+                title={'Send Instructions'}
+                actionClick={sendLetter}
+                disabledBtnSubmit={disabledBtnSubmit}
+                // loadingStatus={}
+            />
             <button className={buttonClassName} onClick={sendLetter}>Send Instructions</button>
-            <p className={styles.textRememberPassword}>Did you remember your password?</p>
-            <NavLink to="/login" activeClassName={styles.login}>Try logging in</NavLink>
+            <p className={st.textRememberPassword}>Did you remember your password?</p>
+            <NavLink to="/login" activeClassName={st.login}>Try logging in</NavLink>
         </div>
     )
 }

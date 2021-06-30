@@ -45,6 +45,12 @@ html {
   -webkit-text-size-adjust: 100%; /* 2 */
 }
 
+h1 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 33px;
+  margin-bottom: 38px;
+}
 /**
  * Render the `main` element consistently in IE.
  */

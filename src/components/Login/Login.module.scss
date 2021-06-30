@@ -1,4 +1,4 @@
-.loginPageContainer {
+.authPageContainer {
   padding: 25px;
   box-sizing: border-box;
   height: 600px;
@@ -8,72 +8,14 @@
   background-color: #F9F9FE;
 }
 
-.logo {
-  font-size: 26px;
-  font-weight: 600;
-  line-height: 39px;
-  margin-bottom: 32px;
-}
-
-h1 {
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 33px;
-  margin-bottom: 38px;
-}
-
-.emailPasswordContainer {
+.emailPasswordLoginContainer {
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;
-
-  label {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-
-    &:nth-child(1) {
-      margin-bottom: 10px;
-    }
-
-    &:nth-child(2) {
-      margin-bottom: 35px;
-    }
-
-    input {
-      padding: 3px;
-      margin-bottom: 3px;
-      box-sizing: border-box;
-      font-size: 16px;
-      color: #2D2E46;
-      width: 100%;
-      border-bottom: 1.3px rgba(36, 37, 74, 0.5) solid;
-      border-right: none;
-      border-left: none;
-      border-top: none;
-      background-color: #F9F9FE;
-      outline: none;
-
-      &:focus {
-        border-bottom: 1.3px rgb(0, 0, 0) solid;
-      }
-    }
-  }
-}
-
-.titleInput {
-  font-size: 13px;
-  line-height: 20px;
-  color: #24254A;
-  Opacity: 0.5;
-  font-family: SF UI Display, sans-serif;
-}
-
-.emailError {
-  color: red;
 }
 
 .forgotPasswordBtn {
+  margin-top: 45px;
   display: flex;
   justify-content: flex-end;
   font-size: 14px;
@@ -96,50 +38,10 @@ h1 {
   font-family: SF UI Display, sans-serif;
 }
 
-.errorEmailPasswordMessage {
-  height: 15px;
-  color: red;
-  font-size: 13px;
-  font-family: SF UI Display, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .errorMessageContainer {
   height: 30px;
   color: red;
-}
-
-.btnLogin {
-  height: 36px;
-  max-width: 266px;
-  width: 100%;
-  border-radius: 30px;
-  padding: 2px;
-  box-sizing: border-box;
-  line-height: 19px;
-  background-color: #21268F;
-  color: #ECECF9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 18px 2px rgba(33, 38, 143, 0.35);
-  margin-bottom: 31px;
-  transition: .2s;
-
-  &:hover {
-    opacity: .8;
-  }
-
-  &:active {
-    background-color: #81839e;
-  }
-
-  &[disabled] {
-    opacity: .8;
-    cursor: default;
-  }
 }
 
 .DifferentAccountBtn {
