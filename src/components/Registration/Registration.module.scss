@@ -1,0 +1,131 @@
+.main{
+  background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.registrationContainer {
+  padding: 25px;
+  box-sizing: border-box;
+  height: 540px;
+  max-width: 413px;
+  border-radius: 8px;
+  width: 100%;
+  background-color: #F9F9FE;
+}
+
+.logo {
+  margin-bottom: 32px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 39px;
+  color: #2D2E46;
+}
+
+.registrationContainer h1 {
+  margin-bottom: 39px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+  color: #2D2E46;
+}
+
+.inputFields {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 84px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.inputName {
+  font-family: SF UI Display;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 20px;
+  color: #24254A;
+  opacity: 0.5;
+}
+
+.registrationContainer input {
+  height: 22px;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #2D2E46;
+  width: 100%;
+  border-bottom: 1.58px rgba(36, 37, 74, 0.2) solid;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  background-color: #F9F9FE;
+  outline: none;
+  margin-bottom: 24px;
+}
+
+
+.password{
+  position: relative;
+}
+
+.passwordControl {
+  position: absolute;
+  top: 20px;
+  right: 6px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.errorContainer{
+  height: 22px;
+}
+
+.errorMessage{
+  color: red;
+  padding: 0;
+  margin: 0;
+}
+
+.btn {
+  width: 100%;
+  font-family: SF UI Display;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.01em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnCancel {
+  padding: 9px 37px 8px 37px;
+  color: #21268F;
+  opacity: 0.8;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+  background-color: #D7D8EF;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.btnRegister {
+  padding: 9px 65px 8px 65px;
+  color: #ECECF9;
+  opacity: 0.8;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+  background-color: #21268F;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
