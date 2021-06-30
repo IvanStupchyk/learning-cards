@@ -34,8 +34,14 @@ export const Registration = () => {
         if (email === '' || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
             setError('Invalid email address')
         }
-        if (password.length < 6 || password === '' || password !== checkPassword) {
-            setError('Invalid password')
+        if (password.length < 8) {
+            setError('Password is less than 8 characters')
+        }
+        if (password === '' ) {
+            setError('Enter password')
+        }
+        if (password !== checkPassword) {
+            setError('Enter correct password')
         }
         else {
             dispatch(setRegistrationTC(email, password))
