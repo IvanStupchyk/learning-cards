@@ -5,7 +5,44 @@ const instance = axios.create({
     baseURL: 'https://neko-back.herokuapp.com/2.0/'
 })
 
-export type responseType = {
+
+//API
+export const loginAPI = {
+    logIn(email: string, password: string, rememberMe: boolean = false) {
+        return instance.post<loginResponseType>('auth/login', {email, password, rememberMe})
+    }
+}
+export const PasswordRecoveryAPI = {
+    forgot(email: string) {
+        return instance.post<PasswordRecoveryDataType>('/auth/forgot', {
+            email,
+            from: "test-front-admin <ai73a@yandex.by>",
+            message: `<div style="background-color: lime; padding: 15px">password recovery link: 
+                        <a href='http://localhost:3000/learning-cards#/new-password/$token$'>link</a></div>`
+        })
+    }
+}
+export const registrationAPI = {
+    register(email: string, password: string) {
+        return instance.post<registrationResponseType>('auth/register', {email, password})
+    }
+}
+
+export const SetNewPasswordAPI = {
+    setNewPassword: async (password: string, resetPasswordToken: string) => {
+        const response = await instance.post<SetNewPasswordDataType>("/auth/set-new-password", {
+            password,
+            resetPasswordToken,
+        });
+        return response.data
+    },
+}
+
+
+//TYPES=====
+
+//loginAPI
+export type loginResponseType = {
     _id: string
     email: string
     name: string
@@ -19,33 +56,31 @@ export type responseType = {
     error?: string
 }
 
-export const loginAPI = {
-    logIn(email: string, password: string, rememberMe: boolean = false) {
-        return instance.post<responseType>('auth/login', {email, password, rememberMe})
-    }
-}
-
+//PasswordRecoveryAPI
 export type PasswordRecoveryDataType = {
     error: string;
 }
 
-export const PasswordRecoveryAPI = {
-    forgot(email: string) {
-        return instance.post<PasswordRecoveryDataType>('/auth/forgot', {
-            email,
-            from: "test-front-admin <ai73a@yandex.by>",
-            message: `<div style="background-color: lime; padding: 15px">password recovery link: 
-                        <a href='http://localhost:3000/learning-cards#/new-password/$token$'>link</a></div>`
-        })
-    }
+//SetNewPasswordAPI
+export type SetNewPasswordDataType = {
+    info: string
+    error: string
 }
 
-// forgot: async (email: string) => {
-//     const response = await instance.post<{error: string}>("/auth/forgot", {
-//         email,
-//         from: "test-front-admin <ai73a@yandex.by>",
-//         message: `<div style="background-color: lime; padding: 15px">password recovery link:
-//                         <a href='http://localhost:3000/learning-cards#/new-password/$token$'>link</a></div>`
-//     });
-//     return response.data;
-// },
+//registrationAPI
+type registrationResponseType = {
+    addedUser: addedUserType
+    error?: string
+}
+type addedUserType = {
+    _id: string,
+    email: string,
+    rememberMe: boolean,
+    isAdmin: boolean,
+    name: string,
+    verified: boolean,
+    publicCardPacksCount: 0,
+    created: string,
+    updated: string,
+    __v: number
+}

@@ -1,41 +1,39 @@
 import {Dispatch} from "redux";
-import {authAPI} from "./RegistrationAPI";
 import {AppThunkType} from "../../state/redux-store";
+import {registrationAPI} from "../../api/api";
 
 const initialStateRegistration = {
-    isRegistration: false
+    isRegistration: false,
+    loadingRequest: false
 }
 
-
 export const registrationReducer = (state: initialRegistrationType = initialStateRegistration, action: actionsRegistrationType) => {
-    switch (action.type) {
-        case 'REGISTRATION/SET-REGISTRATION': {
-            return {
-                ...state, isRegistration: action.isRegistration
-            }
-        }
-        default:
-            return state
+    return action.type ? {...state, ...action.payload} : state
+}
+
+//actionC
+export const setRegistrationAC = (isRegistration: boolean) => ({
+    type: 'REGISTRATION/SET-REGISTRATION', payload: {isRegistration}
+} as const)
+const loadingRequest = (loadingRequest: boolean) => ({
+    type: 'REGISTRATION/LOADING-REQUEST',
+    payload: {loadingRequest}
+} as const)
+
+//thunkC
+export const setRegistrationTC = (email: string, password: string): AppThunkType => async (dispatch: Dispatch<actionsRegistrationType>) => {
+    dispatch(loadingRequest(true))
+
+    try {
+        const response = await registrationAPI.register(email, password)
+        dispatch(setRegistrationAC(true))
+    } catch (e) {
+        console.log(e)
+    } finally {
+        dispatch(loadingRequest(false))
     }
 }
 
-
 //types
-export type initialRegistrationType = {
-    isRegistration: boolean
-}
-export type actionsRegistrationType = ReturnType<typeof setRegistrationAC>
-
-export const setRegistrationAC = (isRegistration: boolean) => ({
-    type: 'REGISTRATION/SET-REGISTRATION', isRegistration
-} as const)
-
-export const setRegistrationTC = (email: string, password: string):AppThunkType => (dispatch: Dispatch<actionsRegistrationType>) => {
-    authAPI.register(email, password)
-        .then(res => {
-            dispatch(setRegistrationAC(true))
-        })
-        .catch((res) => {
-            console.log(res.error)
-        })
-}
+export type initialRegistrationType = typeof initialStateRegistration
+export type actionsRegistrationType = ReturnType<typeof setRegistrationAC> | ReturnType<typeof loadingRequest>

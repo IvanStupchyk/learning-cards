@@ -46,7 +46,6 @@ export const EnterNewPassword = () => {
         <div className={styles.container}>
             <div><h1 className={styles.header}>It-incubator</h1></div>
             <h2 className={styles.header}>Create new password</h2>
-            {/*<input type="password" placeholder={'Password'} onChange={inputPassword} />*/}
             <div className={styles.password}>
                 <label>
                     <input onChange={inputPassword} onBlur={() => {validatePassword(password)}} type={showPassword? 'text' : 'password'}/>

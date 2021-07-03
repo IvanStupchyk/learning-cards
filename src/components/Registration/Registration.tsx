@@ -21,8 +21,10 @@ export const Registration = () => {
     const [errorPasswordMessage, setErrorPasswordMessage] = useState<string>('')
 
     const disabledBtnSubmit = !email || !password || !checkPassword
-    const isRegistration = useSelector<AppStateType, boolean>((state => state.registration.isRegistration))
+
     const dispatch = useDispatch()
+    const loadingStatus = useSelector<AppStateType, boolean>(state => state.registration.loadingRequest)
+    const isRegistration = useSelector<AppStateType, boolean>(state => state.registration.isRegistration)
 
     const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
         setErrorEmailMessage('')
@@ -52,9 +54,7 @@ export const Registration = () => {
     }
 
     if (isRegistration) {
-        return (
-            <Redirect to={'/login'}/>
-        )
+        return <Redirect to={'/login'}/>
     }
 
     const goBack = () => {
@@ -86,9 +86,6 @@ export const Registration = () => {
                     changeValue={onChangeCheckPassword}
                     errorMessage={errorPasswordMessage}
                 />
-                <div className={s.errorContainer}>
-                    {error && <div className={s.errorMessage}>{error}</div>}
-                </div>
             </div>
 
             <div className={s.btns}>
@@ -97,7 +94,9 @@ export const Registration = () => {
                     <MainActionButton
                         actionClick={onRegistration}
                         disabledBtnSubmit={disabledBtnSubmit}
-                        title={'Register'} />
+                        title={'Register'}
+                        loadingStatus={loadingStatus}
+                    />
                 </div>
             </div>
         </div>

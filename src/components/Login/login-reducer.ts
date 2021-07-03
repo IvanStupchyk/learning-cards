@@ -1,4 +1,4 @@
-import {loginAPI, responseType} from "../../api/api";
+import {loginAPI, loginResponseType} from "../../api/api";
 import {AppThunkType} from "../../state/redux-store";
 
 const initialStateLogin: initialLoginType = {
@@ -18,22 +18,11 @@ const initialStateLogin: initialLoginType = {
 }
 
 export const loginReducer = (state: initialLoginType = initialStateLogin, action: actionsLoginType) => {
-    switch (action.type) {
-        case "LOGIN/LOGIN-USER":
-            return {...state, ...action.payload}
-        case 'LOGIN/LOADING-REQUEST':
-            return {...state, ...action.payload}
-        case 'LOGIN/LOG-IN':
-            return {...state, ...action.payload}
-        case 'LOGIN/INCORRECT-DATA-LOG-IN':
-            return {...state, ...action.payload}
-        default:
-            return state
-    }
+    return action.type ? {...state, ...action.payload} : state
 }
 
 //actionC
-const loginUser = (userData: responseType) => {
+const loginUser = (userData: loginResponseType) => {
     return {
         type: 'LOGIN/LOGIN-USER',
         payload: {...userData}

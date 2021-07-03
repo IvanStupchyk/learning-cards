@@ -11,7 +11,7 @@
 .inputFields {
   display: flex;
   flex-direction: column;
-  margin-bottom: 62px;
+  margin-bottom: 84px;
 }
 
 .passwordControl {
@@ -21,16 +21,6 @@
   display: inline-block;
   width: 20px;
   height: 20px;
-}
-
-.errorContainer {
-  height: 22px;
-}
-
-.errorMessage {
-  color: red;
-  padding: 0;
-  margin: 0;
 }
 
 .btns {
@@ -57,6 +47,7 @@
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
   background-color: #D7D8EF;
   transition: .2s;
+
   &:hover {
     background-color: #c0c1dc;
   }
