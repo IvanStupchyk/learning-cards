@@ -1,7 +1,6 @@
 import { AxiosError } from "axios";
 import {AppThunkType} from "../../state/redux-store";
 import {SetNewPasswordAPI} from "./enter-new-password-api";
-import {PasswordRecoveryAPI} from "../PasswordRecovery/password-recovery-api";
 
 const initialStateSetNewPassword = {
     error: '',

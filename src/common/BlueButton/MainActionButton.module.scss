@@ -1,6 +1,5 @@
 .blueBtn {
   height: 36px;
-  max-width: 266px;
   width: 100%;
   border-radius: 30px;
   padding: 2px;
@@ -11,8 +10,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: SF UI Display, sans-serif;
   box-shadow: 0 4px 18px 2px rgba(33, 38, 143, 0.35);
-  margin-bottom: 31px;
   transition: .2s;
 
   &:hover {

@@ -1,14 +1,14 @@
-import React, {ChangeEvent, useRef, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import s from './Login.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {incorrectDataLogIn, loginUserTC} from "./login-reducer";
 import {AppStateType} from "../../state/redux-store";
-import {Preloader} from "../../common/Preloader/Preloader";
-import {Redirect} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import {InputContainer} from "../../common/InputContainer/InputContainer";
 import {emailValidation} from "../../common/validation/EmailValidation";
 import {HeaderEnterApp} from "../../common/HeaderEnterApp/HeaderEnterApp";
-import {BlueButton} from "../../common/BlueButton/BlueButton";
+import {MainActionButton} from "../../common/BlueButton/MainActionButton";
+import {passwordValidation} from "../../common/validation/passwordValidation";
 
 export const Login = () => {
     const [emailValue, setEmailValue] = useState<string>('')
@@ -19,7 +19,6 @@ export const Login = () => {
     const isLogIn = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const errorMessage = useSelector<AppStateType, null | string>(state => state.login.error)
 
-    const passwordTest = /[0-9a-zA-Z!@#$%^&*]{8,}/.test(passwordValue)
     const [errorEmailMessage, setErrorEmailMessage] = useState<string>('')
     const [errorPasswordMessage, setErrorPasswordMessage] = useState<string>('')
 
@@ -37,7 +36,7 @@ export const Login = () => {
     const checkLoginUser = () => {
         if (!emailValidation(emailValue)) {
             setErrorEmailMessage('Incorrect email')
-        } else if (!passwordTest) {
+        } else if (!passwordValidation(passwordValue)) {
             setErrorPasswordMessage('Minimum 8 characters')
         } else {
             dispatch(loginUserTC(emailValue, passwordValue))
@@ -55,14 +54,14 @@ export const Login = () => {
 
             <div className={s.emailPasswordLoginContainer}>
                 <InputContainer
-                    title={'email'}
+                    title={'Email'}
                     typeInput={'email'}
                     value={emailValue}
                     changeValue={changeEmailValue}
                     errorMessage={errorEmailMessage}
                 />
                 <InputContainer
-                    title={'password'}
+                    title={'Password'}
                     typeInput={'password'}
                     value={passwordValue}
                     changeValue={changePasswordValue}
@@ -70,20 +69,21 @@ export const Login = () => {
                 />
 
                 <div className={s.forgotPasswordBtn}>
-                    <a onClick={() => {
-                    }}>Forgot Password</a>
+                    <NavLink to="/password-recovery">Forgot Password</NavLink>
                 </div>
             </div>
 
             <div className={s.btnFooterLoginContainer}>
                 <span className={s.errorMessageContainer}>{errorMessage}</span>
-                <BlueButton actionClick={checkLoginUser}
-                            disabledBtnSubmit={disabledBtnSubmit}
-                            loadingStatus={loadingStatus}
-                            title={'login'}
-                />
-                <button className={s.DifferentAccountBtn}>Don't have an account</button>
-                <button className={s.signUpBtn}>Sing Up</button>
+                <div className={s.blueBtnContainer}>
+                    <MainActionButton actionClick={checkLoginUser}
+                                disabledBtnSubmit={disabledBtnSubmit}
+                                loadingStatus={loadingStatus}
+                                title={'login'}
+                    />
+                </div>
+                <p className={s.DifferentAccountBtn}>Don't have an account</p>
+                <NavLink to="/registration" className={s.footerBtn}>Sing Up</NavLink>
             </div>
         </div>
     )

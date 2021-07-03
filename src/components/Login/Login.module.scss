@@ -21,6 +21,7 @@
   font-size: 14px;
   line-height: 17px;
   font-family: SF UI Display, sans-serif;
+  transition: .2s;
 
   a {
     &:hover {
@@ -51,7 +52,19 @@
   color: rgba(45, 46, 70, 0.5);
 }
 
-.signUpBtn {
+.footerBtn {
   line-height: 24px;
   color: #21268F;
+  transition: .2s;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.blueBtnContainer {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  max-width: 266px;
+  width: 100%;
 }

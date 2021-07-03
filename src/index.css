@@ -64,6 +64,9 @@ main {
  * `article` contexts in Chrome, Firefox, and Safari.
  */
 
+p {
+  margin: 0;
+}
 
 li {
   list-style-type: none;

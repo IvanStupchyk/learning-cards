@@ -4,50 +4,52 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../state/redux-store";
 import {setRegistrationTC} from "./registration-reducer";
 import {Redirect} from 'react-router-dom';
+import {InputContainer} from "../../common/InputContainer/InputContainer";
+import {emailValidation} from "../../common/validation/EmailValidation";
+import {passwordValidation} from "../../common/validation/passwordValidation";
+import {HeaderEnterApp} from "../../common/HeaderEnterApp/HeaderEnterApp";
+import {MainActionButton} from "../../common/BlueButton/MainActionButton";
 
 export const Registration = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [checkPassword, setCheckPassword] = useState<string>('')
-    const [showPassword, setShowPassword] = useState<boolean>(false)
-    const [showCheckPassword, setShowCheckPassword] = useState<boolean>(false)
-    const [error, setError] = useState<string | null>('')
+
+    const [error, setError] = useState<string>('')
+
+    const [errorEmailMessage, setErrorEmailMessage] = useState<string>('')
+    const [errorPasswordMessage, setErrorPasswordMessage] = useState<string>('')
+
+    const disabledBtnSubmit = !email || !password || !checkPassword
     const isRegistration = useSelector<AppStateType, boolean>((state => state.registration.isRegistration))
     const dispatch = useDispatch()
 
     const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
+        setErrorEmailMessage('')
         setEmail(e.currentTarget.value)
     }
 
     const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
+        setErrorPasswordMessage('')
         setPassword(e.currentTarget.value)
     }
 
     const onChangeCheckPassword = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
+        setErrorPasswordMessage('')
         setCheckPassword(e.currentTarget.value)
     }
 
     const onRegistration = () => {
-        if (email === '' || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-            setError('Invalid email address')
-        }
-        if (password.length < 8) {
-            setError('Password is less than 8 characters')
-        }
-        if (password === '' ) {
-            setError('Enter password')
-        }
-        if (password !== checkPassword) {
-            setError('Enter correct password')
-        }
-        else {
+        if (!emailValidation(email)) {
+            setErrorEmailMessage('Incorrect email')
+        } else if (!passwordValidation(password)) {
+            setErrorPasswordMessage('Minimum 8 characters')
+        } else if (password !== checkPassword) {
+            setErrorPasswordMessage('Enter correct password')
+        } else {
             dispatch(setRegistrationTC(email, password))
         }
     }
-
 
     if (isRegistration) {
         return (
@@ -60,39 +62,42 @@ export const Registration = () => {
     }
 
     return (
-        <div className={s.main}>
-            <div className={s.registrationContainer}>
-                <div className={s.logo}>It-incubator</div>
-                <h1>Sign Up</h1>
-                <div className={s.inputFields}>
-                    <label>
-                        <span className={s.inputName}>Email</span>
-                        <input value={email} onChange={onChangeEmail} />
-                    </label>
-                    <div className={s.password}>
-                        <label>
-                            <span className={s.inputName}>Password</span>
-                            <input value={password} onChange={onChangePassword} type={showPassword? 'text' : 'password'}/>
-                            <img alt={'your password'} src={showPassword? 'https://snipp.ru/demo/495/no-view.svg' : 'https://snipp.ru/demo/495/view.svg'}
-                                 className={s.passwordControl} onClick={()=>{setShowPassword(!showPassword)}}/>
-                        </label>
-                    </div>
-                    <div className={s.password}>
-                        <label>
-                            <span className={s.inputName}>Confirm password</span>
-                            <input value={checkPassword} onChange={onChangeCheckPassword} type={showCheckPassword? 'text' : 'password'}/>
-                            <img alt={'your password'} src={showCheckPassword? 'https://snipp.ru/demo/495/no-view.svg' : 'https://snipp.ru/demo/495/view.svg'}
-                                 className={s.passwordControl} onClick={()=>{setShowCheckPassword(!showCheckPassword)}}/>
-                        </label>
-                    </div>
-                    <div className={s.errorContainer}>
-                        {error && <div className={s.errorMessage}>{error}</div>}
-                    </div>
+        <div className={s.registrationContainer}>
+            <HeaderEnterApp title={'Sign Up'}/>
+            <div className={s.inputFields}>
+                <InputContainer
+                    title={'Email'}
+                    typeInput={'email'}
+                    value={email}
+                    changeValue={onChangeEmail}
+                    errorMessage={errorEmailMessage}
+                />
+                <InputContainer
+                    title={'password'}
+                    typeInput={'password'}
+                    value={password}
+                    changeValue={onChangePassword}
+                    errorMessage={errorPasswordMessage}
+                />
+                <InputContainer
+                    title={'Confirm password'}
+                    typeInput={'password'}
+                    value={checkPassword}
+                    changeValue={onChangeCheckPassword}
+                    errorMessage={errorPasswordMessage}
+                />
+                <div className={s.errorContainer}>
+                    {error && <div className={s.errorMessage}>{error}</div>}
                 </div>
+            </div>
 
-                <div className={s.btn}>
-                    <a className={s.btnCancel} onClick={goBack}>Cancel</a>
-                    <a className={s.btnRegister} onClick={onRegistration}>Register</a>
+            <div className={s.btns}>
+                <a className={s.btnCancel} onClick={goBack}>Cancel</a>
+                <div className={s.blueBtnContainer}>
+                    <MainActionButton
+                        actionClick={onRegistration}
+                        disabledBtnSubmit={disabledBtnSubmit}
+                        title={'Register'} />
                 </div>
             </div>
         </div>

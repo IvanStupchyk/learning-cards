@@ -5,12 +5,12 @@ const instance = axios.create({
     baseURL: 'https://neko-back.herokuapp.com/2.0/'
 })
 
-type responseType={
+type responseType = {
     addedUser: addedUserType
     error?: string
 }
 
-type addedUserType={
+type addedUserType = {
     _id: string,
     email: string,
     rememberMe: boolean,
@@ -23,8 +23,8 @@ type addedUserType={
     __v: number
 }
 
-export const authAPI={
-    register(email: string, password: string){
+export const authAPI = {
+    register(email: string, password: string) {
         return instance.post<responseType>('auth/register', {email, password})
     }
 }

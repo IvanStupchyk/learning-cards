@@ -1,4 +1,5 @@
 .emailPasswordContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -37,4 +38,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.passwordControl {
+  position: absolute;
+  top: 20px;
+  right: 6px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
