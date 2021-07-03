@@ -1,6 +1,5 @@
-import { AxiosError } from "axios";
 import {AppThunkType} from "../../state/redux-store";
-import {SetNewPasswordAPI} from "./enter-new-password-api";
+import {SetNewPasswordAPI} from "../../api/api";
 
 const initialStateSetNewPassword = {
     error: '',
@@ -8,37 +7,44 @@ const initialStateSetNewPassword = {
     success: false,
 }
 
-//types
-export type initialSetNewPasswordType = typeof initialStateSetNewPassword
-
-const setError = (error: string) => ({type: 'SET-NEW-PASSWORD/SET_ERROR', payload: {error}} as const)
-const setLoading = (loadingRequest: boolean) => ({type: 'SET-NEW-PASSWORD/SET_LOADING', payload: {loadingRequest}} as const)
-const setSuccess = (success: boolean) => ({type: 'SET-NEW-PASSWORD/SET_SUCCESS', payload: {success}} as const)
-
-export type actionsSetNewPasswordType = ReturnType<typeof setError> | ReturnType<typeof setLoading> | ReturnType<typeof setSuccess>
-
 export const setNewPasswordReducer = (state: initialSetNewPasswordType = initialStateSetNewPassword, action: actionsSetNewPasswordType): initialSetNewPasswordType => {
-    return action.type ? {...state, ...action.payload} : state
+    switch (action.type) {
+        case 'SET-NEW-PASSWORD/SET-ERROR':
+            return {...state, ...action.payload}
+        case 'SET-NEW-PASSWORD/SET-LOADING':
+            return {...state, ...action.payload}
+        case 'SET-NEW-PASSWORD/SET-SUCCESS':
+            return {...state, ...action.payload}
+        default: return state
+    }
 }
 
+//AC
+export const setServerErrorMessage = (error: string) => ({type: 'SET-NEW-PASSWORD/SET-ERROR', payload: {error}} as const)
+const setLoading = (loadingRequest: boolean) => ({type: 'SET-NEW-PASSWORD/SET-LOADING', payload: {loadingRequest}} as const)
+const setSuccess = (success: boolean) => ({type: 'SET-NEW-PASSWORD/SET-SUCCESS', payload: {success}} as const)
+
+//TC
 export const setNewPasswordThunk = (password: string, token: string): AppThunkType => async (dispatch) => {
     dispatch(setLoading(true))
 
-    SetNewPasswordAPI.setNewPassword(password, token)
-        .then(res => {
-            if (!res.error) {
-                console.log(res.error)
-            } else {
-                console.log("Not errors")
-                dispatch(setSuccess(true))
-            }
-        })
-        .catch((error: AxiosError) => {
-            console.log(error)
-            dispatch(setSuccess(false))
-        })
-        .finally(() => {
-            dispatch(setLoading(false))
-        })
+    try {
+        const response = await SetNewPasswordAPI.setNewPassword(password, token)
+        dispatch(setSuccess(true))
+    } catch (e) {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
+        dispatch(setServerErrorMessage(error))
+
+        dispatch(setSuccess(false))
+    } finally {
+        dispatch(setLoading(false))
+    }
 }
 
+//types
+export type initialSetNewPasswordType = typeof initialStateSetNewPassword
+export type actionsSetNewPasswordType = ReturnType<typeof setServerErrorMessage>
+    | ReturnType<typeof setLoading>
+    | ReturnType<typeof setSuccess>

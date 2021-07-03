@@ -29,12 +29,11 @@ export const registrationAPI = {
 }
 
 export const SetNewPasswordAPI = {
-    setNewPassword: async (password: string, resetPasswordToken: string) => {
-        const response = await instance.post<SetNewPasswordDataType>("/auth/set-new-password", {
+    setNewPassword (password: string, resetPasswordToken: string)  {
+        return instance.post<SetNewPasswordDataType>("/auth/set-new-password", {
             password,
             resetPasswordToken,
-        });
-        return response.data
+        })
     },
 }
 

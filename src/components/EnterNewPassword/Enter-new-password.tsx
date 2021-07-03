@@ -1,61 +1,65 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import styles from './Enter-new-password.module.scss'
-import {useDispatch} from "react-redux";
+import s from './Enter-new-password.module.scss'
+import {useDispatch, useSelector} from "react-redux";
 import {Redirect, useParams} from "react-router-dom";
-import {setNewPasswordThunk} from "./enter-new-password-reducer";
-import noView from "../../media/password/no-view.svg"
-import view from "../../media/password/view.svg"
+import {setServerErrorMessage, setNewPasswordThunk} from "./enter-new-password-reducer";
+import {HeaderEnterApp} from "../../common/HeaderEnterApp/HeaderEnterApp";
+import {InputContainer} from "../../common/InputContainer/InputContainer";
+import {PasswordValidation} from "../../common/validation/passwordValidation";
+import {MainActionButton} from "../../common/MainActionButton/MainActionButton";
+import {AppStateType} from "../../state/redux-store";
 
 export const EnterNewPassword = () => {
-    const [password, setPassword] = useState<string>("")
-    const [showPassword, setShowPassword] = useState<boolean>(false)
-    const [savePassword, setSavePassword] = useState<boolean>(false)
-    const [error, setError] = useState<string>("")
-    const [disabledButton, setDisabledButton] = useState<boolean>(true)
-    const { token } = useParams<{token: string}>();
+    const [password, setPassword] = useState<string>('')
+    const [error, setError] = useState<string>('')
+    const { token } = useParams<{token: string}>()
+
     const dispatch = useDispatch()
+    const loadingStatus = useSelector<AppStateType, boolean>(state => state.newPassword.loadingRequest)
+    const successResponse = useSelector<AppStateType, boolean>(state => state.newPassword.success)
+    const serverErrorMessage = useSelector<AppStateType, string>(state => state.newPassword.error)
+
     const setNewPassword = () => {
-        dispatch(setNewPasswordThunk(password, token))
-        setSavePassword(true)
+        if (!PasswordValidation(password)) {
+            setError('Minimum 8 characters')
+        } else {
+            dispatch(setNewPasswordThunk(password, token))
+        }
     }
 
     const inputPassword = (event: ChangeEvent<HTMLInputElement>) => {
         setPassword(event.currentTarget.value)
-        setError("")
-        if (event.currentTarget.value.length <= 4) {
-            setDisabledButton(true)
-        } else {
-            setDisabledButton(false)
-        }
+        setError('')
+        serverErrorMessage && dispatch(setServerErrorMessage(''))
     }
 
-    const validatePassword = (password: string) => {
-        if (password.length <= 4) {
-            setError("Password must be more than 4 characters.")
-            setDisabledButton(true)
-        }
-    }
-
-    if (savePassword) {
+    if (successResponse) {
         return <Redirect to={"/login"}/>
     }
 
-    const buttonClassName = disabledButton ? `${styles.disable}` : ''
-
     return (
-        <div className={styles.container}>
-            <div><h1 className={styles.header}>It-incubator</h1></div>
-            <h2 className={styles.header}>Create new password</h2>
-            <div className={styles.password}>
-                <label>
-                    <input onChange={inputPassword} onBlur={() => {validatePassword(password)}} type={showPassword? 'text' : 'password'}/>
-                    <img alt={'your password'} src={showPassword? noView : view}
-                         className={styles.passwordControl} onClick={()=>{setShowPassword(!showPassword)}}/>
-                    <div className={styles.error}><label>{error}</label></div>
-                </label>
+        <div className={s.containerNewPassword}>
+            <HeaderEnterApp title={'Create new password'}/>
+
+            <InputContainer
+                title={'Password'}
+                value={password}
+                changeValue={inputPassword}
+                errorMessage={error}
+                typeInput={'password'}
+            />
+
+            <p className={s.textAction}>Create new password and we will send you further instructions to email</p>
+            <div className={s.positionActionBtn}>
+                <span className={s.errorMessageContainer}>{serverErrorMessage}</span>
+                <div className={s.blueBtnContainer}>
+                    <MainActionButton
+                        loadingStatus={loadingStatus}
+                        actionClick={setNewPassword}
+                        disabledBtnSubmit={!password}
+                        title={'Create new password'} />
+                </div>
             </div>
-            <p className={styles.textAction}>Create new password and we will send you further instructions to email</p>
-            <button className={buttonClassName} disabled={disabledButton} onClick={setNewPassword}>Create new password</button>
         </div>
     )
 }

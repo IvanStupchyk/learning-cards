@@ -3,7 +3,7 @@ import React, {ChangeEvent, FocusEvent, useState} from "react";
 
 type InputContainerPropsType = {
     title?: string
-    value?: string
+    value: string
     changeValue: (e: ChangeEvent<HTMLInputElement>) => void,
     errorMessage: string
     typeInput: 'email' | 'password' | 'text'

@@ -26,6 +26,18 @@
 .btns {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+}
+
+.positionBtnsAndError {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorMessageContainer {
+  height: 30px;
+  color: red;
 }
 
 .blueBtnContainer {

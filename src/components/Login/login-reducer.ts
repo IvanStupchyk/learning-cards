@@ -12,13 +12,23 @@ const initialStateLogin: initialLoginType = {
     isAdmin: false,
     verified: false,
     rememberMe: false,
-    error: null,
+    error: '',
     loadingRequest: false,
     logIn: false
 }
 
-export const loginReducer = (state: initialLoginType = initialStateLogin, action: actionsLoginType) => {
-    return action.type ? {...state, ...action.payload} : state
+export const loginReducer = (state: initialLoginType = initialStateLogin, action: actionsLoginType): initialLoginType => {
+    switch (action.type) {
+        case 'LOGIN/LOGIN-USER':
+            return {...state, ...action.payload}
+        case 'LOGIN/SET-ERROR':
+            return {...state, ...action.payload}
+        case 'LOGIN/LOADING-REQUEST':
+            return {...state, ...action.payload}
+        case 'LOGIN/LOG-IN':
+            return {...state, ...action.payload}
+        default: return state
+    }
 }
 
 //actionC
@@ -26,25 +36,25 @@ const loginUser = (userData: loginResponseType) => {
     return {
         type: 'LOGIN/LOGIN-USER',
         payload: {...userData}
-    }
+    } as const
 }
 const loadingRequest = (loadingRequest: boolean) => {
     return {
         type: 'LOGIN/LOADING-REQUEST',
         payload: {loadingRequest}
-    }
+    } as const
 }
-const logIn = (logIn: boolean) => {
+export const logIn = (logIn: boolean) => {
     return {
         type: 'LOGIN/LOG-IN',
         payload: {logIn}
-    }
+    } as const
 }
-export const incorrectDataLogIn = (error: string) => {
+export const setServerErrorMessageLogin = (error: string) => {
     return {
-        type: 'LOGIN/INCORRECT-DATA-LOG-IN',
+        type: 'LOGIN/SET-ERROR',
         payload: {error}
-    }
+    } as const
 }
 
 //thunkC
@@ -59,7 +69,7 @@ export const loginUserTC = (emailValue: string, passwordValue: string): AppThunk
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
-        dispatch(incorrectDataLogIn(error))
+        dispatch(setServerErrorMessageLogin(error))
     } finally {
         dispatch(loadingRequest(false))
     }
@@ -77,11 +87,11 @@ export type initialLoginType = {
     isAdmin: boolean
     verified: boolean
     rememberMe: boolean
-    error: string | null
+    error: string
     loadingRequest: boolean
     logIn: boolean
 }
 export type actionsLoginType = ReturnType<typeof loginUser>
     | ReturnType<typeof loadingRequest>
     | ReturnType<typeof logIn>
-    | ReturnType<typeof incorrectDataLogIn>
+    | ReturnType<typeof setServerErrorMessageLogin>

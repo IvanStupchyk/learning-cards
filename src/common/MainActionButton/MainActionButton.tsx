@@ -4,7 +4,7 @@ import React from "react";
 
 type MainActionButton = {
     actionClick: () => void
-    loadingStatus?: boolean
+    loadingStatus: boolean
     disabledBtnSubmit: boolean
     title: string
 }

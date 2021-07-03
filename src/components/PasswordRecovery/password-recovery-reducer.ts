@@ -1,4 +1,3 @@
-import {AxiosError} from "axios";
 import {AppThunkType} from "../../state/redux-store";
 import {PasswordRecoveryAPI} from "../../api/api";
 
@@ -8,38 +7,33 @@ const initialStatePasswordRecovery = {
     success: false,
 }
 
+export const passwordRecoveryReducer = (state: initialPasswordRecoveryType = initialStatePasswordRecovery, action: actionsPasswordRecoveryType): initialPasswordRecoveryType => {
+    switch (action.type) {
+        case 'PASSWORD-RECOVERY/SET-ERROR':
+            return {...state, ...action.payload}
+        case 'PASSWORD-RECOVERY/SET-LOADING':
+            return {...state, ...action.payload}
+        case 'PASSWORD-RECOVERY/SET-SUCCESS':
+            return {...state, ...action.payload}
+        default: return state
+    }
+}
+
 //actionC
-const setError = (error: string) => ({
-    type: 'PASSWORD-RECOVERY/SET_ERROR',
-    payload: {error}
-} as const)
 const setLoadingRequest = (loadingRequest: boolean) => ({
-    type: 'PASSWORD-RECOVERY/SET_LOADING',
+    type: 'PASSWORD-RECOVERY/SET-LOADING',
     payload: {loadingRequest}
 } as const)
 export const setSuccess = (success: boolean) => ({
-    type: 'PASSWORD-RECOVERY/SET_SUCCESS',
+    type: 'PASSWORD-RECOVERY/SET-SUCCESS',
     payload: {success}
 } as const)
-
-export const passwordRecoveryReducer = (state: initialPasswordRecoveryType = initialStatePasswordRecovery, action: actionsPasswordRecoveryType): initialPasswordRecoveryType => {
-    return action.type ? {...state, ...action.payload} : state
+export const setServerErrorMessageRecovery = (error: string) => {
+    return {
+        type: 'PASSWORD-RECOVERY/SET-ERROR',
+        payload: {error}
+    } as const
 }
-
-// switch (action.type) {
-//     case 'PASSWORD-RECOVERY/SET_ERROR': {
-//         return {...state, ...action.payload}
-//     }
-//     case 'PASSWORD-RECOVERY/SET_LOADING': {
-//         return {...state, ...action.payload}
-//     }
-//     case 'PASSWORD-RECOVERY/SET_SUCCESS': {
-//         return {...state, ...action.payload}
-//     }
-//     default: {
-//         return state
-//     }
-// }
 
 //thunkC
 export const passwordRecoveryThunk = (email: string): AppThunkType => async (dispatch) => {
@@ -47,15 +41,13 @@ export const passwordRecoveryThunk = (email: string): AppThunkType => async (dis
 
     try {
         const response = await PasswordRecoveryAPI.forgot(email)
+        dispatch(setSuccess(true))
+    } catch (e) {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
+        dispatch(setServerErrorMessageRecovery(error))
 
-        if (!!response.data.error) {
-            console.log(response.data.error)
-        } else {
-            console.log("Not errors")
-            dispatch(setSuccess(true))
-        }
-    } catch (error) {
-        console.log(error)
         dispatch(setSuccess(false))
     } finally {
         dispatch(setLoadingRequest(false))
@@ -65,6 +57,6 @@ export const passwordRecoveryThunk = (email: string): AppThunkType => async (dis
 //types
 export type initialPasswordRecoveryType = typeof initialStatePasswordRecovery
 export type actionsPasswordRecoveryType =
-    ReturnType<typeof setError>
     | ReturnType<typeof setLoadingRequest>
     | ReturnType<typeof setSuccess>
+    | ReturnType<typeof setServerErrorMessageRecovery>

@@ -1,14 +1,14 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import s from './Login.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {incorrectDataLogIn, loginUserTC} from "./login-reducer";
+import {setServerErrorMessageLogin, loginUserTC, logIn} from "./login-reducer";
 import {AppStateType} from "../../state/redux-store";
 import {NavLink, Redirect} from "react-router-dom";
 import {InputContainer} from "../../common/InputContainer/InputContainer";
 import {emailValidation} from "../../common/validation/EmailValidation";
 import {HeaderEnterApp} from "../../common/HeaderEnterApp/HeaderEnterApp";
-import {MainActionButton} from "../../common/BlueButton/MainActionButton";
-import {passwordValidation} from "../../common/validation/passwordValidation";
+import {MainActionButton} from "../../common/MainActionButton/MainActionButton";
+import {PasswordValidation} from "../../common/validation/passwordValidation";
 
 export const Login = () => {
     const [emailValue, setEmailValue] = useState<string>('')
@@ -17,7 +17,7 @@ export const Login = () => {
     const dispatch = useDispatch()
     const loadingStatus = useSelector<AppStateType, boolean>(state => state.login.loadingRequest)
     const isLogIn = useSelector<AppStateType, boolean>(state => state.login.logIn)
-    const errorMessage = useSelector<AppStateType, null | string>(state => state.login.error)
+    const serverErrorMessage = useSelector<AppStateType, string>(state => state.login.error)
 
     const [errorEmailMessage, setErrorEmailMessage] = useState<string>('')
     const [errorPasswordMessage, setErrorPasswordMessage] = useState<string>('')
@@ -25,23 +25,31 @@ export const Login = () => {
     const changeEmailValue = (e: ChangeEvent<HTMLInputElement>) => {
         setEmailValue(e.currentTarget.value)
         setErrorEmailMessage('')
-        errorMessage && dispatch(incorrectDataLogIn(''))
+        serverErrorMessage && dispatch(setServerErrorMessageLogin(''))
     }
     const changePasswordValue = (e: ChangeEvent<HTMLInputElement>) => {
         setPasswordValue(e.currentTarget.value)
-        errorMessage && dispatch(incorrectDataLogIn(''))
+        serverErrorMessage && dispatch(setServerErrorMessageLogin(''))
         setErrorPasswordMessage('')
     }
 
     const checkLoginUser = () => {
         if (!emailValidation(emailValue)) {
             setErrorEmailMessage('Incorrect email')
-        } else if (!passwordValidation(passwordValue)) {
+        } else if (!PasswordValidation(passwordValue)) {
             setErrorPasswordMessage('Minimum 8 characters')
         } else {
             dispatch(loginUserTC(emailValue, passwordValue))
         }
     }
+
+    useEffect(() => {
+        return () => {
+            dispatch(setServerErrorMessageLogin(''))
+            dispatch(logIn(false))
+            //может потом вылогинить, если будет проверка на logIn
+        }
+    }, [])
 
     if (isLogIn) {
         return <Redirect to={'/profile'}/>
@@ -74,7 +82,7 @@ export const Login = () => {
             </div>
 
             <div className={s.btnFooterLoginContainer}>
-                <span className={s.errorMessageContainer}>{errorMessage}</span>
+                <span className={s.errorMessageContainer}>{serverErrorMessage}</span>
                 <div className={s.blueBtnContainer}>
                     <MainActionButton actionClick={checkLoginUser}
                                 disabledBtnSubmit={disabledBtnSubmit}
