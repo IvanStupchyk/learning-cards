@@ -1,26 +1,24 @@
 {
   "files": {
-    "main.css": "/learning-cards/static/css/main.55e9c17a.chunk.css",
-    "main.js": "/learning-cards/static/js/main.146c5fe2.chunk.js",
-    "main.js.map": "/learning-cards/static/js/main.146c5fe2.chunk.js.map",
-    "runtime-main.js": "/learning-cards/static/js/runtime-main.1e282a52.js",
-    "runtime-main.js.map": "/learning-cards/static/js/runtime-main.1e282a52.js.map",
-    "static/js/2.79bc1f7c.chunk.js": "/learning-cards/static/js/2.79bc1f7c.chunk.js",
-    "static/js/2.79bc1f7c.chunk.js.map": "/learning-cards/static/js/2.79bc1f7c.chunk.js.map",
-    "static/js/3.44f53f41.chunk.js": "/learning-cards/static/js/3.44f53f41.chunk.js",
-    "static/js/3.44f53f41.chunk.js.map": "/learning-cards/static/js/3.44f53f41.chunk.js.map",
+    "main.css": "/learning-cards/static/css/main.8a52cb03.chunk.css",
+    "main.js": "/learning-cards/static/js/main.38e2aabd.chunk.js",
+    "main.js.map": "/learning-cards/static/js/main.38e2aabd.chunk.js.map",
+    "runtime-main.js": "/learning-cards/static/js/runtime-main.a5eedf6d.js",
+    "runtime-main.js.map": "/learning-cards/static/js/runtime-main.a5eedf6d.js.map",
+    "static/js/2.51e222b9.chunk.js": "/learning-cards/static/js/2.51e222b9.chunk.js",
+    "static/js/2.51e222b9.chunk.js.map": "/learning-cards/static/js/2.51e222b9.chunk.js.map",
+    "static/js/3.adf8381a.chunk.js": "/learning-cards/static/js/3.adf8381a.chunk.js",
+    "static/js/3.adf8381a.chunk.js.map": "/learning-cards/static/js/3.adf8381a.chunk.js.map",
     "index.html": "/learning-cards/index.html",
-    "static/css/main.55e9c17a.chunk.css.map": "/learning-cards/static/css/main.55e9c17a.chunk.css.map",
-    "static/js/2.79bc1f7c.chunk.js.LICENSE.txt": "/learning-cards/static/js/2.79bc1f7c.chunk.js.LICENSE.txt",
-    "static/media/checkEmail.bc3a4042.svg": "/learning-cards/static/media/checkEmail.bc3a4042.svg",
-    "static/media/loadingBtn.8c4b4840.svg": "/learning-cards/static/media/loadingBtn.8c4b4840.svg",
-    "static/media/no-view.ef3570e6.svg": "/learning-cards/static/media/no-view.ef3570e6.svg",
-    "static/media/view.bc05a0cb.svg": "/learning-cards/static/media/view.bc05a0cb.svg"
+    "static/css/main.8a52cb03.chunk.css.map": "/learning-cards/static/css/main.8a52cb03.chunk.css.map",
+    "static/js/2.51e222b9.chunk.js.LICENSE.txt": "/learning-cards/static/js/2.51e222b9.chunk.js.LICENSE.txt",
+    "static/media/checkEmail.27258fd7.svg": "/learning-cards/static/media/checkEmail.27258fd7.svg",
+    "static/media/loadingBtn.95ae2c78.svg": "/learning-cards/static/media/loadingBtn.95ae2c78.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.1e282a52.js",
-    "static/js/2.79bc1f7c.chunk.js",
-    "static/css/main.55e9c17a.chunk.css",
-    "static/js/main.146c5fe2.chunk.js"
+    "static/js/runtime-main.a5eedf6d.js",
+    "static/js/2.51e222b9.chunk.js",
+    "static/css/main.8a52cb03.chunk.css",
+    "static/js/main.38e2aabd.chunk.js"
   ]
 }
