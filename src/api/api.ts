@@ -126,7 +126,7 @@ type addedUserType = {
 
 //PacsListAPI
 type cardAndPackType = "pack" | "folder" | "card"
-type cardsPackType = {
+export type cardsPackType = {
     _id: string
     user_id: string
     name: string
@@ -140,7 +140,7 @@ type cardsPackType = {
     updated: string
     __v?: number
 }
-type getPacksAPIParamsType = {
+export type getPacksAPIParamsType = {
     packName?: string
     min?: number
     max?: number
@@ -149,7 +149,7 @@ type getPacksAPIParamsType = {
     pageCount?: number
     user_id?: string
 }
-type resultGetPacksAPIType = {
+export type resultGetPacksAPIType = {
     cardPacks: Array<cardsPackType>
     cardPacksTotalCount: number
     maxCardsCount: number
