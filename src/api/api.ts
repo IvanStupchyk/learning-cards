@@ -43,6 +43,34 @@ export const authAPI = {
         return instance.delete<logOutType>('/auth/me')
     }
 }
+export const PacksListAPI = {
+    getPacks(params: getPacksAPIParamsType) {
+        return instance.get<resultGetPacksAPIType>('/cards/pack', {params})
+    },
+    addCardsPack(data: addCardsPackDataType) {
+        return instance.post<Array<cardsPackType>>('/cards/pack', data)
+    },
+    deleteCardsPack(params: {id: string}) {
+        return instance.delete<Array<cardsPackType>>('/cards/pack', {params})
+    },
+    changeCardsPack(data: {_id: string, name?: string}) {
+        return instance.put<Array<cardsPackType>>('/cards/pack', data)
+    },
+}
+export const CardsListAPI = {
+    getCards(params: getCardsAPIParamsType) {
+        return instance.get<resultGetCardsAPIType>('/cards/card', {params})
+    },
+    addCard(data: addCardDataType) {
+        return instance.post<Array<cardType>>('/cards/card', data)
+    },
+    deleteCard(params: {id: string}) {
+        return instance.delete<Array<cardType>>('/cards/card', {params})
+    },
+    changeCard(data: {_id: string, question?: string, comments?: string}) {
+        return instance.put<Array<cardType>>('/cards/card', data)
+    },
+}
 
 //TYPES=====
 
@@ -94,4 +122,93 @@ type addedUserType = {
     created: string,
     updated: string,
     __v: number
+}
+
+//PacsListAPI
+type cardAndPackType = "pack" | "folder" | "card"
+type cardsPackType = {
+    _id: string
+    user_id: string
+    name: string
+    path?: string
+    cardsCount: number
+    grade?: number
+    shots?: number
+    rating?: number
+    type?: cardAndPackType
+    created: string
+    updated: string
+    __v?: number
+}
+type getPacksAPIParamsType = {
+    packName?: string
+    min?: number
+    max?: number
+    sortPacks?: string
+    page?: number
+    pageCount?: number
+    user_id?: string
+}
+type resultGetPacksAPIType = {
+    cardPacks: Array<cardsPackType>
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
+    page: number
+}
+type addCardsPackDataType = {
+   name?: string
+   path?: string
+   grade?: number
+   shots?: number
+   rating?: number
+   deckCover?: string
+   private?: boolean
+   type?: string
+}
+
+//CardsListAPI
+type cardType = {
+    answer: string
+    question: string
+    cardsPack_id: string
+    grade: number
+    shots: number
+    rating?: number
+    type?: cardAndPackType
+    created: string
+    updated: string
+    __v?: number
+    _id: string
+}
+type getCardsAPIParamsType = {
+    cardAnswer?: string
+    cardQuestion?: string
+    cardPack_id: string
+    min?: number
+    max?: number
+    sortCards?: string
+    page?: number
+    pageCount?: number
+}
+type resultGetCardsAPIType = {
+    cardPacks: Array<cardType>
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
+    packUserId: string
+}
+type addCardDataType = {
+    cardsPack_id: string
+    question?: string
+    answer?: string
+    grade?: number
+    shots?: number
+    rating?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    type?: cardAndPackType
 }
