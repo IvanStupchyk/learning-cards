@@ -12,12 +12,12 @@ type InputContainerPropsType = {
 }
 export const InputContainer = (props: InputContainerPropsType) => {
     const [showPassword, setShowPassword] = useState<boolean>(false)
+
     const typeShowInput = () => {
-        if (props.typeInput === 'email') {
-            return props.typeInput
-        } else if (props.typeInput === 'password') {
+        if (props.typeInput === 'password') {
             return showPassword ? 'text' : 'password'
         }
+        return props.typeInput
     }
 
     return (

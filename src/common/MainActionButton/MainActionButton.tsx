@@ -11,7 +11,8 @@ type MainActionButton = {
 
 export const MainActionButton = (props: MainActionButton) => {
     return (
-        <button className={s.blueBtn} onClick={props.actionClick}
+        <button className={s.blueBtn}
+                onClick={props.actionClick}
                 disabled={props.loadingStatus || props.disabledBtnSubmit}>{props.loadingStatus ? <Preloader/> : props.title}</button>
     )
 }

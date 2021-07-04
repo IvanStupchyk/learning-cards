@@ -46,10 +46,9 @@ export const Login = () => {
     useEffect(() => {
         return () => {
             dispatch(setServerErrorMessageLogin(''))
-            dispatch(logIn(false))
-            //может потом вылогинить, если будет проверка на logIn
         }
     }, [])
+
 
     if (isLogIn) {
         return <Redirect to={'/profile'}/>

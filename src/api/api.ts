@@ -27,16 +27,22 @@ export const registrationAPI = {
         return instance.post<registrationResponseType>('auth/register', {email, password})
     }
 }
-
 export const SetNewPasswordAPI = {
-    setNewPassword (password: string, resetPasswordToken: string)  {
+    setNewPassword(password: string, resetPasswordToken: string) {
         return instance.post<SetNewPasswordDataType>("/auth/set-new-password", {
             password,
             resetPasswordToken,
         })
-    },
+    }
 }
-
+export const authAPI = {
+    me() {
+        return instance.post<loginResponseType>('/auth/me', {})
+    },
+    logOut() {
+        return instance.delete<logOutType>('/auth/me')
+    }
+}
 
 //TYPES=====
 
@@ -53,6 +59,12 @@ export type loginResponseType = {
     verified: boolean
     rememberMe: boolean
     error?: string
+}
+
+//authAPI
+type logOutType = {
+    info: string,
+    error: string
 }
 
 //PasswordRecoveryAPI

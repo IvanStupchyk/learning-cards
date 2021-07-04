@@ -1,4 +1,4 @@
-import {loginAPI, loginResponseType} from "../../api/api";
+import {authAPI, loginAPI, loginResponseType} from "../../api/api";
 import {AppThunkType} from "../../state/redux-store";
 
 const initialStateLogin: initialLoginType = {
@@ -27,12 +27,13 @@ export const loginReducer = (state: initialLoginType = initialStateLogin, action
             return {...state, ...action.payload}
         case 'LOGIN/LOG-IN':
             return {...state, ...action.payload}
-        default: return state
+        default:
+            return state
     }
 }
 
 //actionC
-const loginUser = (userData: loginResponseType) => {
+export const loginUser = (userData: loginResponseType) => {
     return {
         type: 'LOGIN/LOGIN-USER',
         payload: {...userData}
@@ -64,14 +65,35 @@ export const loginUserTC = (emailValue: string, passwordValue: string): AppThunk
     try {
         const response = await loginAPI.logIn(emailValue, passwordValue)
         dispatch(loginUser(response.data))
+        // debugger
         dispatch(logIn(true))
+
     } catch (e) {
         const error = e.response
             ? e.response.data.error
-            : (e.message + ', more details in the console');
+            : (e.message + ', more details in the console')
         dispatch(setServerErrorMessageLogin(error))
     } finally {
         dispatch(loadingRequest(false))
+    }
+}
+
+export const AuthUser = (): AppThunkType => async (dispatch) => {
+    try {
+        const response = await authAPI.me()
+
+        dispatch(logIn(true))
+        dispatch(loginUser(response.data))
+    } catch (e) {
+    }
+}
+
+export const logOutUser = (): AppThunkType => async (dispatch) => {
+    try {
+        const response = await authAPI.logOut()
+        dispatch(logIn(false))
+    } catch (e) {
+        console.log(e)
     }
 }
 
