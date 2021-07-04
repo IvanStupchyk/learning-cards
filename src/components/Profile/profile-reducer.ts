@@ -1,3 +1,8 @@
+import {AppThunkType} from "../../state/redux-store";
+import {Dispatch} from "redux";
+import {authAPI} from "../../api/api";
+import {loginUser} from "../Login/login-reducer";
+
 const initialStateProfile = {
    profile:{
        _id: '',
@@ -5,31 +10,60 @@ const initialStateProfile = {
        name: '',
        avatar: '',
        publicCardPacksCount: 0
-   }
+   },
+    loadingRequest: false,
 }
 
 export const profileReducer = (state: initialProfileType = initialStateProfile, action: actionsProfileType) => {
     switch (action.type) {
-        case 'PROFILE/SET-PROFILE':
-            return {...state, ...action.payload}
+        case 'LOGIN/LOGIN-USER':
+            return {...state, profile: action.payload}
         case 'PROFILE/UPDATE-PROFILE':
             return {...state, profile: state.profile, avatar: action.payload.avatar, name: action.payload.name}
+        case 'PROFILE/LOADING-REQUEST':
+            return {...state, ...action.payload}
         default:
             return state
     }
 }
 
 //actionC
-export const setProfileAC = (profile: initialProfileType) => ({
-    type: 'PROFILE/SET-PROFILE', payload: {profile}
-} as const)
 const updateProfileAC = (avatar: string, name: string) => ({
     type: 'PROFILE/UPDATE-PROFILE',
     payload: {avatar, name}
 } as const)
+const loadingRequestAC = (loadingRequest: boolean) => ({
+    type: 'PROFILE/LOADING-REQUEST',
+    payload: {loadingRequest}
+} as const)
 
+
+//thunkC
+export const updateProfile = (avatar: string, name: string): AppThunkType => async (dispatch: Dispatch<actionsProfileType>) => {
+    dispatch(loadingRequestAC(true))
+    try {
+        const response = await authAPI.updateProfile(avatar, name)
+        dispatch(updateProfileAC(avatar, name))
+    } catch (e) {
+        /*const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
+        dispatch(setServerErrorMessageRegistration(error))*/
+    } finally {
+        dispatch(loadingRequestAC(false))
+    }
+}
 
 //types
-export type initialProfileType = typeof initialStateProfile
-export type actionsProfileType = | ReturnType<typeof setProfileAC>
+type initialProfileType = typeof initialStateProfile
+export type actionsProfileType = | ReturnType<typeof loginUser>
     | ReturnType<typeof updateProfileAC>
+    | ReturnType<typeof loadingRequestAC>
+
+export type profileType={
+    _id: string,
+    email: string,
+    name: string,
+    avatar: string,
+    publicCardPacksCount: number
+}

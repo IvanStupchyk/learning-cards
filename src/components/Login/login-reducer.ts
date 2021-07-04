@@ -6,7 +6,7 @@ const initialStateLogin: initialLoginType = {
     email: '',
     name: '',
     avatar: '',
-    publicCardPacksCount: null,
+    publicCardPacksCount: 0,
     created: null,
     updated: null,
     isAdmin: false,
@@ -65,7 +65,6 @@ export const loginUserTC = (emailValue: string, passwordValue: string): AppThunk
     try {
         const response = await loginAPI.logIn(emailValue, passwordValue)
         dispatch(loginUser(response.data))
-        // debugger
         dispatch(logIn(true))
 
     } catch (e) {
@@ -103,7 +102,7 @@ export type initialLoginType = {
     email: string
     name: string
     avatar: string
-    publicCardPacksCount: number | null
+    publicCardPacksCount: number
     created: Date | null
     updated: Date | null
     isAdmin: boolean

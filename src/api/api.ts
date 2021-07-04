@@ -39,6 +39,9 @@ export const authAPI = {
     me() {
         return instance.post<loginResponseType>('/auth/me', {})
     },
+    updateProfile(avatar: string, name: string) {
+        return instance.put<loginResponseType>('/auth/me', {avatar, name})
+    },
     logOut() {
         return instance.delete<logOutType>('/auth/me')
     }

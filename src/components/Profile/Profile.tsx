@@ -4,9 +4,14 @@ import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../state/redux-store";
 import {AuthUser, logOutUser} from "../Login/login-reducer";
 
+
 export const Profile = React.memo(() => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const idUser = useSelector<AppStateType, string>(state => state.login._id)
+    const avatar = useSelector<AppStateType, string>(state => state.login.avatar)
+    const name = useSelector<AppStateType, string>(state => state.login.name)
+    const email = useSelector<AppStateType, string>(state => state.login.email)
+    const publicCardPacksCount = useSelector<AppStateType, number>(state => state.login.publicCardPacksCount)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -23,8 +28,19 @@ export const Profile = React.memo(() => {
 
     return (
         <div>
-            Profile
-            <button onClick={logOut} style={{height: '30px', width: '80px', backgroundColor: 'red'}}>log out</button>
+            <div>
+                <div>
+                    <img src={avatar && avatar ? avatar : ''} alt="user_photo"/>
+                    <div>{name && name}</div>
+                    <div>{email && email}</div>
+                    <div>{publicCardPacksCount && publicCardPacksCount}</div>
+                </div>
+                <div>Number of cards</div>
+            </div>
+            <div>
+                <button onClick={logOut} style={{height: '30px', width: '80px', backgroundColor: 'red'}}>log out
+                </button>
+            </div>
         </div>
     )
 })
