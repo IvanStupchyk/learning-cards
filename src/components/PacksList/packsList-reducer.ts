@@ -5,7 +5,7 @@ import {
     registrationAPI,
     resultGetPacksAPIType
 } from "../../api/api";
-import {AppThunkType} from "../../state/redux-store";
+import {AppThunkType, GetAppStateType} from "../../state/redux-store";
 import {Dispatch} from "redux";
 import {setServerErrorMessageRegistration} from "../Registration/registration-reducer";
 
@@ -29,8 +29,7 @@ export const packsListReducer = (state = initialState, action: actionPacksListTy
 }
 
 //thunkC
-export const getPackList = (params: getPacksAPIParamsType): AppThunkType => async (dispatch: Dispatch<actionPacksListType>) => {
-    //dispatch(loadingRequest(true))
+export const getPackList = (params: getPacksAPIParamsType): AppThunkType => async (dispatch: Dispatch<actionPacksListType>, getStore: GetAppStateType) => {
 
     try {
         const response = await PacksListAPI.getPacks({})
@@ -40,9 +39,7 @@ export const getPackList = (params: getPacksAPIParamsType): AppThunkType => asyn
         const error = e.response
             ? e.response.data.error
             : (e.message + ', more details in the console');
-        //dispatch(setServerErrorMessageRegistration(error))
     } finally {
-        //dispatch(loadingRequest(false))
     }
 }
 
