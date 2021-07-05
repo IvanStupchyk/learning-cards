@@ -16,10 +16,8 @@ const initialStateProfile = {
 
 export const profileReducer = (state: initialProfileType = initialStateProfile, action: actionsProfileType) => {
     switch (action.type) {
-        case 'LOGIN/LOGIN-USER':
-            return {...state, profile: action.payload}
         case 'PROFILE/UPDATE-PROFILE':
-            return {...state, profile: state.profile, avatar: action.payload.avatar, name: action.payload.name}
+            return {...state, ...action.payload}
         case 'PROFILE/LOADING-REQUEST':
             return {...state, ...action.payload}
         default:

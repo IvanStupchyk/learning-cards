@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../state/redux-store";
 import {AuthUser, logOutUser} from "../Login/login-reducer";
+import s from "../Profile/Profile.module.scss";
 
 
 export const Profile = React.memo(() => {
@@ -27,19 +28,20 @@ export const Profile = React.memo(() => {
     if (!isAuth) return <Redirect to={'/login'}/>
 
     return (
-        <div>
-            <div>
-                <div>
+        <div className={s.profilePageContainer}>
+            <div className={s.profileContainer}>
+                <div className={s.profileAboutYou}>
                     <img src={avatar && avatar ? avatar : ''} alt="user_photo"/>
                     <div>{name && name}</div>
                     <div>{email && email}</div>
-                    <div>{publicCardPacksCount && publicCardPacksCount}</div>
+                    <div>I am Front-end developer</div>
+                    <div>public card packs count: {publicCardPacksCount && publicCardPacksCount}</div>
+                    <button className={s.btnEdit}>Edit profile</button>
                 </div>
-                <div>Number of cards</div>
+                <div className={s.numberOfCards}>Number of cards</div>
             </div>
-            <div>
-                <button onClick={logOut} style={{height: '30px', width: '80px', backgroundColor: 'red'}}>log out
-                </button>
+            <div className={s.profilePacksList}>
+                <button className={s.btnLogout} onClick={logOut}>log out</button>
             </div>
         </div>
     )
