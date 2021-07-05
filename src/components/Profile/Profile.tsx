@@ -36,12 +36,15 @@ export const Profile = React.memo(() => {
                     <div>{email && email}</div>
                     <div>I am Front-end developer</div>
                     <div>public card packs count: {publicCardPacksCount && publicCardPacksCount}</div>
+                    <div>
                     <button className={s.btnEdit}>Edit profile</button>
+                    <button className={s.btnLogout} onClick={logOut}>log out</button>
+                    </div>
                 </div>
                 <div className={s.numberOfCards}>Number of cards</div>
             </div>
             <div className={s.profilePacksList}>
-                <button className={s.btnLogout} onClick={logOut}>log out</button>
+
             </div>
         </div>
     )
