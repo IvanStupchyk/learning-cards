@@ -45,7 +45,7 @@ export const authAPI = {
 }
 export const PacksListAPI = {
     getPacks(params: getPacksAPIParamsType) {
-        return instance.get<resultGetPacksAPIType>('/cards/pack', {params})
+        return instance.get<resultGetPacksAPIType>(`/cards/pack?pageCount=50`)
     },
     addCardsPack(data: addCardsPackDataType) {
         return instance.post<Array<cardsPackType>>('/cards/pack', data)
@@ -59,7 +59,8 @@ export const PacksListAPI = {
 }
 export const CardsListAPI = {
     getCards(params: getCardsAPIParamsType) {
-        return instance.get<resultGetCardsAPIType>('/cards/card', {params})
+        return instance.get<resultGetCardsAPIType>(`/cards/card?cardsPack_id=${params.cardPack_id}`
+            + "&pageCount=50")
     },
     addCard(data: addCardDataType) {
         return instance.post<Array<cardType>>('/cards/card', data)
@@ -168,7 +169,7 @@ type addCardsPackDataType = {
 }
 
 //CardsListAPI
-type cardType = {
+export type cardType = {
     answer: string
     question: string
     cardsPack_id: string
@@ -181,7 +182,7 @@ type cardType = {
     __v?: number
     _id: string
 }
-type getCardsAPIParamsType = {
+export type getCardsAPIParamsType = {
     cardAnswer?: string
     cardQuestion?: string
     cardPack_id: string
@@ -191,7 +192,7 @@ type getCardsAPIParamsType = {
     page?: number
     pageCount?: number
 }
-type resultGetCardsAPIType = {
+export type resultGetCardsAPIType = {
     cardPacks: Array<cardType>
     cardsTotalCount: number
     maxGrade: number
