@@ -45,15 +45,17 @@ export const authAPI = {
 }
 export const PacksListAPI = {
     getPacks(params: getPacksAPIParamsType) {
-        return instance.get<resultGetPacksAPIType>(`/cards/pack?pageCount=50`)
+        const user_id = params.user_id !== undefined ? `&user_id=${params.user_id}` : ''
+        return instance.get<resultGetPacksAPIType>(`/cards/pack?pageCount=50${user_id}`
+        )
     },
     addCardsPack(data: addCardsPackDataType) {
         return instance.post<Array<cardsPackType>>('/cards/pack', data)
     },
-    deleteCardsPack(params: {id: string}) {
+    deleteCardsPack(params: { id: string }) {
         return instance.delete<Array<cardsPackType>>('/cards/pack', {params})
     },
-    changeCardsPack(data: {_id: string, name?: string}) {
+    changeCardsPack(data: { _id: string, name?: string }) {
         return instance.put<Array<cardsPackType>>('/cards/pack', data)
     },
 }
@@ -65,10 +67,10 @@ export const CardsListAPI = {
     addCard(data: addCardDataType) {
         return instance.post<Array<cardType>>('/cards/card', data)
     },
-    deleteCard(params: {id: string}) {
+    deleteCard(params: { id: string }) {
         return instance.delete<Array<cardType>>('/cards/card', {params})
     },
-    changeCard(data: {_id: string, question?: string, comments?: string}) {
+    changeCard(data: { _id: string, question?: string, comments?: string }) {
         return instance.put<Array<cardType>>('/cards/card', data)
     },
 }
@@ -158,15 +160,17 @@ export type resultGetPacksAPIType = {
     minCardsCount: number
     page: number
 }
-type addCardsPackDataType = {
-   name?: string
-   path?: string
-   grade?: number
-   shots?: number
-   rating?: number
-   deckCover?: string
-   private?: boolean
-   type?: string
+export type addCardsPackDataType = {
+    cardsPack: {
+        name?: string
+        path?: string
+        grade?: number
+        shots?: number
+        rating?: number
+        deckCover?: string
+        private?: boolean
+        type?: string
+    }
 }
 
 //CardsListAPI
@@ -202,15 +206,17 @@ export type resultGetCardsAPIType = {
     pageCount: number
     packUserId: string
 }
-type addCardDataType = {
-    cardsPack_id: string
-    question?: string
-    answer?: string
-    grade?: number
-    shots?: number
-    rating?: number
-    answerImg?: string
-    questionImg?: string
-    questionVideo?: string
-    type?: cardAndPackType
+export type addCardDataType = {
+    card: {
+        cardsPack_id: string
+        question?: string
+        answer?: string
+        grade?: number
+        shots?: number
+        rating?: number
+        answerImg?: string
+        questionImg?: string
+        questionVideo?: string
+        type?: cardAndPackType
+    }
 }
