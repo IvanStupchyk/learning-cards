@@ -6,6 +6,7 @@ import {AppStateType} from "../../state/redux-store";
 import {cardsPackType} from "../../api/api";
 import {NavLink, Redirect} from "react-router-dom";
 import {AuthUser} from "../Login/login-reducer";
+import {Preloader} from "../../common/Preloader/Preloader";
 
 export const PacksList = () => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
@@ -15,6 +16,7 @@ export const PacksList = () => {
     useEffect(() => {
         if (!idUser) {
             dispatch(AuthUser())
+        } else {
             dispatch(getPackList({}))
         }
     }, [dispatch])
@@ -22,6 +24,10 @@ export const PacksList = () => {
     const packsList = useSelector<AppStateType, Array<cardsPackType>>(state => state.packsList)
 
     if (!isAuth) return <Redirect to={'/login'}/>
+
+    if (!packsList.length) {
+        return <Preloader/>
+    }
 
     return (
         <table>

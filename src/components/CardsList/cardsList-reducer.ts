@@ -30,7 +30,6 @@ export const getCardsList = (params: getCardsAPIParamsType): AppThunkType => asy
 
     try {
         const response = await CardsListAPI.getCards(params)
-        debugger
         dispatch(GetCardsListAC(response.data.cardPacks))
     } catch (e) {
         const error = e.response
