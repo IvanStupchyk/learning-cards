@@ -23,7 +23,9 @@ export const PacksList = () => {
 
     const packsList = useSelector<AppStateType, Array<cardsPackType>>(state => state.packsList)
 
-    if (!isAuth) return <Redirect to={'/login'}/>
+    if (!isAuth) {
+        return <Redirect to={'/login'}/>
+    }
 
     if (!packsList.length) {
         return <Preloader/>

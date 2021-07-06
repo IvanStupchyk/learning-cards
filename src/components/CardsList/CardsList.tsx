@@ -24,9 +24,10 @@ export const CardsList = () => {
 
     const cardsList = useSelector<AppStateType, Array<cardType>>(state => state.cardsList)
 
-    if (!isAuth) return <Redirect to={'/login'}/>
+    if (!isAuth) {
+        return <Redirect to={'/login'}/>
+    }
 
-    debugger
     if (!cardsList.length) {
         return <Preloader/>
     }
