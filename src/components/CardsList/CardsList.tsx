@@ -33,18 +33,27 @@ export const CardsList = () => {
     }
 
     return (
-        <table>
-            <tr>
-                {Object.keys(cardsList[0]).map((key) => (
-                    <th>{key}</th>
-                ))}
+        <table className={s.table}>
+            <tr className={s.tableRow}>
+                {/*{Object.keys(cardsList[0]).map((key) => (*/}
+                {/*    <th>{key}</th>*/}
+                {/*))}*/}
+                <th className={s.tableHeader}>{"QUESTION"}</th>
+                <th className={s.tableHeader}>{"ANSWER"}</th>
+                <th className={s.tableHeader}>{"GRADE"}</th>
+                <th className={s.tableHeader}>{"UPDATED"}</th>
+                <th><input type={'text'}/></th>
                 <th><button>ADD</button></th>
             </tr>
             {cardsList.map((card) => (
-                <tr key={card._id}>
-                    {Object.values(card).map((val) => (
-                        <td>{val}</td>
-                    ))}
+                <tr key={card._id} className={s.tableRow}>
+                    {/*{Object.values(card).map((val) => (*/}
+                    {/*    <td>{val}</td>*/}
+                    {/*))}*/}
+                    <td className={s.tableCol}>{card.question}</td>
+                    <td className={s.tableCol}>{card.answer}</td>
+                    <td className={s.tableCol}>{card.grade}</td>
+                    <td className={s.tableCol}>{card.updated}</td>
                     <td><button>DELETE</button></td>
                     <td><button>UPDATE</button></td>
                 </tr>

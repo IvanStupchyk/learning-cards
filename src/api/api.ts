@@ -60,8 +60,7 @@ export const PacksListAPI = {
 export const CardsListAPI = {
     getCards(params: getCardsAPIParamsType) {
         return instance.get<resultGetCardsAPIType>(`/cards/card?cardsPack_id=${params.cardPack_id}`
-            //+ "&pageCount=50"
-        )
+            + "&pageCount=50")
     },
     addCard(data: addCardDataType) {
         return instance.post<Array<cardType>>('/cards/card', data)
@@ -131,6 +130,7 @@ type cardAndPackType = "pack" | "folder" | "card"
 export type cardsPackType = {
     _id: string
     user_id: string
+    user_name: string
     name: string
     path?: string
     cardsCount: number

@@ -2,12 +2,9 @@ import {
     cardsPackType,
     getPacksAPIParamsType,
     PacksListAPI,
-    registrationAPI,
-    resultGetPacksAPIType
 } from "../../api/api";
 import {AppThunkType, GetAppStateType} from "../../state/redux-store";
 import {Dispatch} from "redux";
-import {setServerErrorMessageRegistration} from "../Registration/registration-reducer";
 
 const initialState: Array<cardsPackType> = []
 
