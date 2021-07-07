@@ -4,11 +4,12 @@ import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../state/redux-store";
 import {AuthUser, logOutUser} from "../Login/login-reducer";
 import s from "../Profile/Profile.module.scss";
+import {PersonalInformation} from "./PersonalInformation";
 
 
 export const Profile = React.memo(() => {
 
-    const [editModeProfile, setEditModeProfile]= useState<boolean>(false)
+    const[editModeProfile, setEditModeProfile]= useState<boolean>(false)
 
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const idUser = useSelector<AppStateType, string>(state => state.login._id)
@@ -17,6 +18,8 @@ export const Profile = React.memo(() => {
     const email = useSelector<AppStateType, string>(state => state.login.email)
     const publicCardPacksCount = useSelector<AppStateType, number>(state => state.login.publicCardPacksCount)
     const dispatch = useDispatch()
+
+    const closeModelWindow= () => setEditModeProfile(false)
 
     useEffect(() => {
         if (!idUser) {
@@ -48,25 +51,7 @@ export const Profile = React.memo(() => {
             </div>
             <div className={s.profilePacksList}>
             </div>
-            {editModeProfile &&
-           /* <>
-                <div className={s.modalBackground} onClick={()=>setEditModeProfile(false)}>
-                </div>
-                <div className={s.modalMessage}>
-                    <div className={s.modalMessageContainer}>
-                        <h2>Personal information</h2>
-                        </div>
-                </div>
-            </>*/
-            <>
-                <div className={s.modalBackground} onClick={()=>setEditModeProfile(false)}>
-                    <div className={s.modalMessage}>
-                        <div className={s.modalMessageContainer}>
-                            <h2>Personal information</h2>
-                        </div>
-                    </div>
-                </div>
-            </>
+            {editModeProfile && <PersonalInformation onClick={closeModelWindow}/>
             }
         </div>
     )
