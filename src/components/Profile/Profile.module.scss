@@ -1,5 +1,4 @@
 .profilePageContainer {
-  margin: 24px auto 0;
   max-width: 1008px;
   min-height: 720px;
   display: flex;
@@ -73,4 +72,30 @@
   padding: 5px 6px 4px;
   cursor: pointer;
   opacity: 0.8;
+}
+
+
+.modalBackground {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #E6D4DE, #9890C7);
+  z-index: 20;
+  left: 0;
+}
+
+.modalMessage {
+  z-index: 21;
+  padding: 25px;
+  box-sizing: border-box;
+  height: 540px;
+  max-width: 415px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: #F9F9FE;
+  margin: 0 auto;
+}
+
+.modalMessageContainer{
+
 }

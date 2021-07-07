@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../state/redux-store";
@@ -7,6 +7,9 @@ import s from "../Profile/Profile.module.scss";
 
 
 export const Profile = React.memo(() => {
+
+    const [editModeProfile, setEditModeProfile]= useState<boolean>(false)
+
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const idUser = useSelector<AppStateType, string>(state => state.login._id)
     const avatar = useSelector<AppStateType, string>(state => state.login.avatar)
@@ -37,15 +40,34 @@ export const Profile = React.memo(() => {
                     <div>I am Front-end developer</div>
                     <div>public card packs count: {publicCardPacksCount && publicCardPacksCount}</div>
                     <div>
-                    <button className={s.btnEdit}>Edit profile</button>
+                    <button className={s.btnEdit} onClick={()=>setEditModeProfile(true)}>Edit profile</button>
                     <button className={s.btnLogout} onClick={logOut}>log out</button>
                     </div>
                 </div>
                 <div className={s.numberOfCards}>Number of cards</div>
             </div>
             <div className={s.profilePacksList}>
-
             </div>
+            {editModeProfile &&
+           /* <>
+                <div className={s.modalBackground} onClick={()=>setEditModeProfile(false)}>
+                </div>
+                <div className={s.modalMessage}>
+                    <div className={s.modalMessageContainer}>
+                        <h2>Personal information</h2>
+                        </div>
+                </div>
+            </>*/
+            <>
+                <div className={s.modalBackground} onClick={()=>setEditModeProfile(false)}>
+                    <div className={s.modalMessage}>
+                        <div className={s.modalMessageContainer}>
+                            <h2>Personal information</h2>
+                        </div>
+                    </div>
+                </div>
+            </>
+            }
         </div>
     )
 })
