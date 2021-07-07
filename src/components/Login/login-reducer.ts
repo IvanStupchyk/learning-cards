@@ -27,6 +27,8 @@ export const loginReducer = (state: initialLoginType = initialStateLogin, action
             return {...state, ...action.payload}
         case 'LOGIN/LOG-IN':
             return {...state, ...action.payload}
+        case 'LOGIN/UPDATE-PROFILE':
+            return {...state, ...action.payload}
         default:
             return state
     }
@@ -57,6 +59,11 @@ export const setServerErrorMessageLogin = (error: string) => {
         payload: {error}
     } as const
 }
+
+export const updateUserAC = (avatar: string, name: string) => ({
+    type: 'LOGIN/UPDATE-PROFILE',
+    payload: {avatar, name}
+} as const)
 
 //thunkC
 export const loginUserTC = (emailValue: string, passwordValue: string): AppThunkType => async (dispatch) => {
@@ -116,3 +123,4 @@ export type actionsLoginType = ReturnType<typeof loginUser>
     | ReturnType<typeof loadingRequest>
     | ReturnType<typeof logIn>
     | ReturnType<typeof setServerErrorMessageLogin>
+    | ReturnType<typeof updateUserAC>

@@ -1,7 +1,16 @@
 import {AppThunkType} from "../../state/redux-store";
 import {Dispatch} from "redux";
 import {authAPI} from "../../api/api";
-import {loginUser} from "../Login/login-reducer";
+import {updateUserAC} from "../Login/login-reducer";
+
+type profileResponseType = {
+    _id: string
+    email: string
+    name: string
+    avatar: string
+    publicCardPacksCount: number
+}
+
 
 const initialStateProfile = {
    profile:{
@@ -10,14 +19,12 @@ const initialStateProfile = {
        name: '',
        avatar: '',
        publicCardPacksCount: 0
-   },
+   } as profileResponseType,
     loadingRequest: false,
 }
 
 export const profileReducer = (state: initialProfileType = initialStateProfile, action: actionsProfileType) => {
-    switch (action.type) {
-        case 'PROFILE/UPDATE-PROFILE':
-            return {...state, ...action.payload}
+     switch (action.type) {
         case 'PROFILE/LOADING-REQUEST':
             return {...state, ...action.payload}
         default:
@@ -26,10 +33,6 @@ export const profileReducer = (state: initialProfileType = initialStateProfile, 
 }
 
 //actionC
-const updateProfileAC = (avatar: string, name: string) => ({
-    type: 'PROFILE/UPDATE-PROFILE',
-    payload: {avatar, name}
-} as const)
 const loadingRequestAC = (loadingRequest: boolean) => ({
     type: 'PROFILE/LOADING-REQUEST',
     payload: {loadingRequest}
@@ -41,7 +44,7 @@ export const updateProfile = (avatar: string, name: string): AppThunkType => asy
     dispatch(loadingRequestAC(true))
     try {
         const response = await authAPI.updateProfile(avatar, name)
-        dispatch(updateProfileAC(avatar, name))
+        dispatch(updateUserAC(avatar, name))
     } catch (e) {
         /*const error = e.response
             ? e.response.data.error
@@ -54,14 +57,7 @@ export const updateProfile = (avatar: string, name: string): AppThunkType => asy
 
 //types
 type initialProfileType = typeof initialStateProfile
-export type actionsProfileType = | ReturnType<typeof loginUser>
-    | ReturnType<typeof updateProfileAC>
+export type actionsProfileType =
     | ReturnType<typeof loadingRequestAC>
+    | ReturnType<typeof updateUserAC>
 
-export type profileType={
-    _id: string,
-    email: string,
-    name: string,
-    avatar: string,
-    publicCardPacksCount: number
-}

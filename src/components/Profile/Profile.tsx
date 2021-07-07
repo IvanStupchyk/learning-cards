@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../state/redux-store";
-import {AuthUser, logOutUser} from "../Login/login-reducer";
+import {AuthUser, loginUserTC, logOutUser} from "../Login/login-reducer";
 import s from "../Profile/Profile.module.scss";
 import {PersonalInformation} from "./PersonalInformation";
+import {updateProfile} from "./profile-reducer";
 
 
 export const Profile = React.memo(() => {
@@ -24,8 +25,10 @@ export const Profile = React.memo(() => {
     useEffect(() => {
         if (!idUser) {
             dispatch(AuthUser())
+        } else {
+            dispatch(updateProfile(avatar, name))
         }
-    }, [dispatch])
+    }, [dispatch, avatar, name])
 
     const logOut = () => {
         dispatch(logOutUser())
@@ -51,7 +54,7 @@ export const Profile = React.memo(() => {
             </div>
             <div className={s.profilePacksList}>
             </div>
-            {editModeProfile && <PersonalInformation onClick={closeModelWindow}/>
+            {editModeProfile && <PersonalInformation onClick={closeModelWindow} name={name} avatar={avatar}/>
             }
         </div>
     )
