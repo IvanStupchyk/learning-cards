@@ -1,19 +1,19 @@
 import s from './CardsList.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import React, {ChangeEvent, useEffect, useState} from "react";
-import {addCard, getCardsList} from "./cardsList-reducer";
+import {addCard, deleteCard, getCardsList} from "./cardsList-reducer";
 import {AppStateType} from "../../state/redux-store";
 import {cardType} from "../../api/api";
 import {Redirect, useParams} from "react-router-dom";
 import {AuthUser} from "../Login/login-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {addPack} from "../PacksList/packsList-reducer";
+import {ManageCardsButton} from "./ManageCardsButton";
 
 export const CardsList = () => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const idUser = useSelector<AppStateType, string>(state => state.login._id)
-    const [title, setTitle] = useState<string>("")
-    const [error, setError] = useState<string | null>(null)
+    const success = useSelector<AppStateType, boolean>(state => state.cardsList.success)
     const dispatch = useDispatch();
     const {id} = useParams<{ id: string }>()
 
@@ -25,21 +25,14 @@ export const CardsList = () => {
         }
     }, [dispatch, id])
 
-    const cardsList = useSelector<AppStateType, Array<cardType>>(state => state.cardsList)
-
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        error && setError(null)
-        setTitle(e.currentTarget.value)
-    }
+    const cardsList = useSelector<AppStateType, Array<cardType>>(state => state.cardsList.arrayCard)
 
     const addCardFun = () => {
-        const trimmedTitle = title.trim()
-        if (trimmedTitle) {
-            dispatch(addCard({card: {cardsPack_id: id}}))
-        } else {
-            setError("Title is required")
-        }
-        setTitle("")
+        dispatch(addCard({card: {cardsPack_id: id}}))
+    }
+
+    const deleteCardFun = (id: string, cardPack_id: string) => {
+        dispatch(deleteCard({id, cardPack_id}))
     }
 
     if (!isAuth) {
@@ -49,6 +42,9 @@ export const CardsList = () => {
     // if (!cardsList.length) {
     //     return <Preloader/>
     // }
+    if (!success) {
+        return <Preloader/>
+    }
 
     return (
         <table className={s.table}>
@@ -60,7 +56,6 @@ export const CardsList = () => {
                 <th className={s.tableHeader}>{"ANSWER"}</th>
                 <th className={s.tableHeader}>{"GRADE"}</th>
                 <th className={s.tableHeader}>{"UPDATED"}</th>
-                <th><input type={'text'} onChange={changeTitle}/></th>
                 <th>
                     <button onClick={addCardFun}>ADD</button>
                 </th>
@@ -74,12 +69,7 @@ export const CardsList = () => {
                     <td className={s.tableCol}>{card.answer}</td>
                     <td className={s.tableCol}>{card.grade}</td>
                     <td className={s.tableCol}>{card.updated}</td>
-                    <td>
-                        <button>DELETE</button>
-                    </td>
-                    <td>
-                        <button>UPDATE</button>
-                    </td>
+                    <ManageCardsButton _id={card._id} cardPack_id={card.cardsPack_id} deleteCardFun={deleteCardFun}/>
                 </tr>
             ))}
         </table>
