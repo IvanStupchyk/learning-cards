@@ -1,17 +1,19 @@
 import s from './PacksList.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
-import {addPack, getPackList, setPageNumberAC} from "./packsList-reducer";
+import {addPack, deletePack, getPackList, setPageNumberAC} from "./packsList-reducer";
 import {AppStateType} from "../../state/redux-store";
 import {cardsPackType, getPacksAPIParamsType} from "../../api/api";
 import {NavLink, Redirect} from "react-router-dom";
 import {AuthUser} from "../Login/login-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {Pagination} from "../../common/Pagination/Pagination";
+import { ManagePacksButton } from './ManagePacksButton';
 
 export const PacksList = () => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const user_id = useSelector<AppStateType, string>(state => state.login._id)
+    const success = useSelector<AppStateType, boolean>(state => state.packsList.success)
     const [checkedPrivate, setCheckedPrivate] = useState<boolean>(false)
     const [title, setTitle] = useState<string>("")
     const [packName, setPackName] = useState<string>("pack")
@@ -47,11 +49,16 @@ export const PacksList = () => {
     const addPackFun = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle) {
+            setCheckedPrivate(false)
             dispatch(addPack({cardsPack: {name: title, private: checkedPrivate}}))
         } else {
             setError("Title is required")
         }
         setTitle("")
+    }
+
+    const deletePackFun = (id: string) => {
+        dispatch(deletePack({id}))
     }
 
     const getPrivatePacks = () => {
@@ -67,7 +74,10 @@ export const PacksList = () => {
         return <Redirect to={'/login'}/>
     }
 
-    if (!packsList.length) {
+    // if (!packsList.length) {
+    //     return <Preloader/>
+    // }
+    if (!success) {
         return <Preloader/>
     }
 
@@ -101,12 +111,7 @@ export const PacksList = () => {
                             <td className={s.tableCol}>{pack.cardsCount}</td>
                             <td className={s.tableCol}>{pack.user_name}</td>
                             <td className={s.tableCol}>{pack.updated}</td>
-                            <td>
-                                <button>DELETE</button>
-                            </td>
-                            <td>
-                                <button>UPDATE</button>
-                            </td>
+                            <ManagePacksButton _id={pack._id} deletePackFun={deletePackFun}/>
                             <td><NavLink to={`/cards-list/${pack._id}`} activeClassName={s.activeLink}>cards list</NavLink>
                             </td>
                         </tr>
