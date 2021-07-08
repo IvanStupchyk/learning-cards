@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../state/redux-store";
-import {AuthUser, loginUserTC, logOutUser} from "../Login/login-reducer";
+import {AuthUser, logOutUser} from "../Login/login-reducer";
 import s from "../Profile/Profile.module.scss";
 import {PersonalInformation} from "./PersonalInformation";
 import {updateProfile} from "./profile-reducer";
@@ -10,7 +10,7 @@ import {updateProfile} from "./profile-reducer";
 
 export const Profile = React.memo(() => {
 
-    const[editModeProfile, setEditModeProfile]= useState<boolean>(false)
+    const [editModeProfile, setEditModeProfile] = useState<boolean>(false)
 
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const idUser = useSelector<AppStateType, string>(state => state.login._id)
@@ -20,7 +20,7 @@ export const Profile = React.memo(() => {
     const publicCardPacksCount = useSelector<AppStateType, number>(state => state.login.publicCardPacksCount)
     const dispatch = useDispatch()
 
-    const closeModelWindow= () => setEditModeProfile(false)
+    const closeModelWindow = () => setEditModeProfile(false)
 
     useEffect(() => {
         if (!idUser) {
@@ -46,13 +46,16 @@ export const Profile = React.memo(() => {
                     <div>I am Front-end developer</div>
                     <div>public card packs count: {publicCardPacksCount && publicCardPacksCount}</div>
                     <div>
-                    <button className={s.btnEdit} onClick={()=>setEditModeProfile(true)}>Edit profile</button>
-                    <button className={s.btnLogout} onClick={logOut}>log out</button>
+                        <button className={s.btnEdit} onClick={() => setEditModeProfile(true)}>Edit profile</button>
+                        <button className={s.btnLogout} onClick={logOut}>log out</button>
                     </div>
                 </div>
                 <div className={s.numberOfCards}>Number of cards</div>
             </div>
             <div className={s.profilePacksList}>
+                <div className={s.packsListContainer}>
+                    <h2>My packs list</h2>
+                </div>
             </div>
             {editModeProfile && <PersonalInformation onClick={closeModelWindow} name={name} avatar={avatar}/>
             }
