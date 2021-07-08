@@ -1,12 +1,20 @@
-.table {
-  border: 1px solid black;
-}
-.tableHeader {
-  border: 1px solid black;
-}
-.tableRow {
-  border: 1px solid black;
-}
-.tableCol {
-  border: 1px solid black;
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  .private {
+    align-self: flex-start;
+  }
+  .table {
+    border: 1px solid black;
+  }
+  .tableHeader {
+    border: 1px solid black;
+  }
+  .tableRow {
+    border: 1px solid black;
+  }
+  .tableCol {
+    border: 1px solid black;
+  }
 }
