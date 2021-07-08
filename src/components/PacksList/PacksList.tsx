@@ -1,16 +1,19 @@
 import s from './PacksList.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import React, {ChangeEvent, useEffect, useState} from "react";
-import {addPack, getPackList} from "./packsList-reducer";
+import React, {ChangeEvent, MouseEventHandler, useEffect, useState} from "react";
+import {addPack, deletePack, getPackList, SetSuccessAC} from "./packsList-reducer";
 import {AppStateType} from "../../state/redux-store";
 import {cardsPackType} from "../../api/api";
 import {NavLink, Redirect} from "react-router-dom";
 import {AuthUser} from "../Login/login-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
+import {ManagePacksButton} from "./ManagePackButton";
 
 export const PacksList = () => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const idUser = useSelector<AppStateType, string>(state => state.login._id)
+    const success = useSelector<AppStateType, boolean>(state => state.packsList.success)
+    const packsList = useSelector<AppStateType, Array<cardsPackType>>(state => state.packsList.arrayPack)
     const [checkedPrivate, setCheckedPrivate] = useState<boolean>(false)
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
@@ -24,7 +27,6 @@ export const PacksList = () => {
         }
     }, [dispatch])
 
-    const packsList = useSelector<AppStateType, Array<cardsPackType>>(state => state.packsList)
 
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         error && setError(null)
@@ -34,11 +36,17 @@ export const PacksList = () => {
     const addPackFun = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle) {
+            setTitle("")
+            setCheckedPrivate(false)
             dispatch(addPack({cardsPack: {name: title, private: checkedPrivate}}))
         } else {
             setError("Title is required")
         }
         setTitle("")
+    }
+
+    const deletePackFun = (id: string) => {
+        dispatch(deletePack({id}))
     }
 
     const getPrivatePacks = () => {
@@ -54,9 +62,11 @@ export const PacksList = () => {
         return <Redirect to={'/login'}/>
     }
 
-    if (!packsList.length) {
-        return <Preloader/>
-    }
+    if (!success) {
+        return <Preloader/>}
+    // else {
+    //     dispatch(SetSuccessAC(false))
+    // }
 
     return (
         <>
@@ -87,12 +97,7 @@ export const PacksList = () => {
                         <td className={s.tableCol}>{pack.cardsCount}</td>
                         <td className={s.tableCol}>{pack.user_name}</td>
                         <td className={s.tableCol}>{pack.updated}</td>
-                        <td>
-                            <button>DELETE</button>
-                        </td>
-                        <td>
-                            <button>UPDATE</button>
-                        </td>
+                        <ManagePacksButton _id={pack._id} deletePackFun={deletePackFun}/>
                         <td><NavLink to={`/cards-list/${pack._id}`} activeClassName={s.activeLink}>cards list</NavLink>
                         </td>
                     </tr>
