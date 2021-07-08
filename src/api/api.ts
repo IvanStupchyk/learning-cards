@@ -48,9 +48,9 @@ export const authAPI = {
 }
 export const PacksListAPI = {
     getPacks(params: getPacksAPIParamsType) {
-        const user_id = params.user_id !== undefined ? `&user_id=${params.user_id}` : ''
-        return instance.get<resultGetPacksAPIType>(`/cards/pack?pageCount=50${user_id}`
-        )
+        const {page,max,min,packName,pageCount,user_id} = params
+        const user__id = user_id !== undefined ? `&user_id=${user_id}` : ''
+        return instance.get<resultGetPacksAPIType>(`cards/pack?page=${page}&pageCount=${pageCount}&packName=${packName}&min=${min}&max=${max}${user__id}`)
     },
     addCardsPack(data: addCardsPackDataType) {
         return instance.post<Array<cardsPackType>>('/cards/pack', data)
