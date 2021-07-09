@@ -1,6 +1,7 @@
 body {
-  background: linear-gradient(180deg, #E6D4DE, #9890C7);
+  background: linear-gradient(180deg, #E6D4DE, #9890C7) no-repeat;
   height: 100vh;
+  background-size: cover;
 }
 
 .App {

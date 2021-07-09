@@ -23,8 +23,11 @@ export const Navbar = () => {
             <div className={s.item}>
                 <NavLink to="/registration" activeClassName={s.activeLink}>registration</NavLink>
             </div>
+            {/*<div className={s.item}>*/}
+            {/*    <NavLink to="/test-components" activeClassName={s.activeLink}>test components</NavLink>*/}
+            {/*</div>*/}
             <div className={s.item}>
-                <NavLink to="/test-components" activeClassName={s.activeLink}>test components</NavLink>
+                <NavLink to="/packs-list" activeClassName={s.activeLink}>packs list</NavLink>
             </div>
         </nav>
     )
