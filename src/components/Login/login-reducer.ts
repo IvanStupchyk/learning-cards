@@ -1,5 +1,6 @@
 import {authAPI, loginAPI, loginResponseType} from "../../api/api";
 import {AppThunkType} from "../../state/redux-store";
+import {setProfileAC} from "../Profile/profile-reducer";
 
 const initialStateLogin: initialLoginType = {
     _id: '',
@@ -7,8 +8,8 @@ const initialStateLogin: initialLoginType = {
     name: '',
     avatar: '',
     publicCardPacksCount: 0,
-    created: null,
-    updated: null,
+    created: '',
+    updated: '',
     isAdmin: false,
     verified: false,
     rememberMe: false,
@@ -26,8 +27,6 @@ export const loginReducer = (state: initialLoginType = initialStateLogin, action
         case 'LOGIN/LOADING-REQUEST':
             return {...state, ...action.payload}
         case 'LOGIN/LOG-IN':
-            return {...state, ...action.payload}
-        case 'LOGIN/UPDATE-PROFILE':
             return {...state, ...action.payload}
         default:
             return state
@@ -60,10 +59,6 @@ export const setServerErrorMessageLogin = (error: string) => {
     } as const
 }
 
-export const updateUserAC = (avatar: string, name: string) => ({
-    type: 'LOGIN/UPDATE-PROFILE',
-    payload: {avatar, name}
-} as const)
 
 //thunkC
 export const loginUserTC = (emailValue: string, passwordValue: string): AppThunkType => async (dispatch) => {
@@ -89,7 +84,7 @@ export const AuthUser = (): AppThunkType => async (dispatch) => {
         const response = await authAPI.me()
 
         dispatch(logIn(true))
-        dispatch(loginUser(response.data))
+        dispatch(setProfileAC(response.data))
     } catch (e) {
     }
 }
@@ -110,8 +105,8 @@ export type initialLoginType = {
     name: string
     avatar: string
     publicCardPacksCount: number
-    created: Date | null
-    updated: Date | null
+    created: string
+    updated: string
     isAdmin: boolean
     verified: boolean
     rememberMe: boolean
@@ -123,4 +118,3 @@ export type actionsLoginType = ReturnType<typeof loginUser>
     | ReturnType<typeof loadingRequest>
     | ReturnType<typeof logIn>
     | ReturnType<typeof setServerErrorMessageLogin>
-    | ReturnType<typeof updateUserAC>

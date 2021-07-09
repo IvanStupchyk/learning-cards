@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../state/redux-store";
@@ -6,7 +6,6 @@ import s from "../Profile/PersonalIngormation.module.scss";
 import {MainActionButton} from "../../common/MainActionButton/MainActionButton";
 import {updateProfile} from "./profile-reducer";
 import {InputContainer} from "../../common/InputContainer/InputContainer";
-import {AuthUser} from "../Login/login-reducer";
 
 type PersonalInformationPropsType = {
     onClick: () => void
@@ -39,6 +38,7 @@ export const PersonalInformation = React.memo((props: PersonalInformationPropsTy
     const disabledBtnSubmit = !newName || !urlAvatar
 
     const onSaveInformation = () => {
+        debugger
         if (!newName) {
             setErrorNickName('Incorrect nick name')
         } else if (!urlAvatar) {
@@ -59,7 +59,7 @@ export const PersonalInformation = React.memo((props: PersonalInformationPropsTy
                 <div className={s.modalMessage}>
                     <div className={s.modalMessageContainer}>
                         <h2>Personal information</h2>
-                        <img src={props.avatar && props.avatar ? props.avatar : ''} alt="user_photo"/>
+                        <img src={urlAvatar && urlAvatar ? urlAvatar : ''} alt="user_photo"/>
                         <div className={s.inputFields}>
                             <InputContainer
                                 title={'Nick name'}

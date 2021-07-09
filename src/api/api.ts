@@ -37,13 +37,13 @@ export const SetNewPasswordAPI = {
 }
 export const authAPI = {
     me() {
-        return instance.post<loginResponseType>('/auth/me', {})
+        return instance.post<loginResponseType>('auth/me', {})
     },
     updateProfile(avatar: string, name: string) {
-        return instance.put<loginResponseType>('/auth/me', {avatar, name})
+        return instance.put<profileResponseType>('auth/me', {avatar, name})
     },
     logOut() {
-        return instance.delete<logOutType>('/auth/me')
+        return instance.delete<logOutType>('auth/me')
     }
 }
 
@@ -54,14 +54,21 @@ export type loginResponseType = {
     _id: string
     email: string
     name: string
-    avatar?: string
+    avatar: string
     publicCardPacksCount: number
-    created: Date
-    updated: Date
+    created: ''
+    updated: ''
     isAdmin: boolean
     verified: boolean
     rememberMe: boolean
+}
+
+//profileAPI
+export type profileResponseType={
+    updatedUser: loginResponseType
     error?: string
+    token: string
+    tokenDeathTime: number
 }
 
 //authAPI

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {TestComponents} from "./components/TestComponents/Test-components";
 import {Route, Switch} from "react-router-dom";
@@ -12,6 +12,7 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {CheckEmail} from "./components/PasswordRecovery/ChekEmail";
 
 function App() {
+
     return (
         <div className="App">
             <Navbar />
