@@ -35,6 +35,7 @@ export const loginReducer = (state: initialLoginType = initialStateLogin, action
 
 //actionC
 export const loginUser = (userData: loginResponseType) => {
+    debugger
     return {
         type: 'LOGIN/LOGIN-USER',
         payload: {...userData}

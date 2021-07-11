@@ -21,7 +21,8 @@ export const initialState: InitialStateType = {
         max: 20,
         page: 1,
         pageCount: 15,
-        sortPacks: '0updated'
+        sortPacks: '0updated',
+        packName: ''
     },
     cardPacksTotalCount: 0,
     success: false,
@@ -32,16 +33,18 @@ type GetPacksListAT = ReturnType<typeof GetPacksListAC>
 type setPageNumber = ReturnType<typeof setPageNumberAC>
 type setTotalPacksCountAC = ReturnType<typeof setTotalPacksCountAC>
 type setPageCountAC = ReturnType<typeof setPageCountAC>
+type setPackNameAT = ReturnType<typeof setPackNameAC>
 type SetSuccessAT = ReturnType<typeof SetSuccessAC>
 // type AddPackAT = ReturnType<typeof AddPackAC>
 
-export type actionPacksListType = GetPacksListAT | SetSuccessAT | setPageNumber | setTotalPacksCountAC | setPageCountAC
+export type actionPacksListType = GetPacksListAT | SetSuccessAT | setPageNumber | setTotalPacksCountAC | setPackNameAT | setPageCountAC
 
 //actionC
 export const GetPacksListAC = (packs: Array<cardsPackType>) => ({type: 'packList/GET-PACKSLIST', packs} as const)
 export const setPageNumberAC =  (page:number) => ({type:'packList/SET-PAGE-NUMBER' , page} as const)
 export const setTotalPacksCountAC = (cardPacksTotalCount: number)  => ({type: 'packList/SET-PACKS-TOTAL-COUNT', cardPacksTotalCount} as const)
 export const setPageCountAC = (pageCount: number) => ({type: `packList/SET-PAGE-COUNT`, pageCount} as const)
+export const setPackNameAC = (packName: string) => ({type: `packList/SET-PACK-NAME`, packName} as const)
 export const SetSuccessAC = (success: boolean) => ({type: 'packList/SET-SUCCESS', success} as const)
 
 
@@ -70,6 +73,12 @@ export const packsListReducer = (state = initialState, action: actionPacksListTy
             return ({
                 ...state,
                 packsParams: {...state.packsParams, pageCount: action.pageCount}
+            })
+        }
+        case "packList/SET-PACK-NAME": {
+            return ({
+                ...state,
+                packsParams: {...state.packsParams, packName: action.packName}
             })
         }
         case "packList/SET-SUCCESS":

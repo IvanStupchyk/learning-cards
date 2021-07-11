@@ -137,7 +137,7 @@ type addedUserType = {
     __v: number
 }
 
-//PacsListAPI
+//PacksListAPI
 type cardAndPackType = "pack" | "folder" | "card"
 export type cardsPackType = {
     _id: string
