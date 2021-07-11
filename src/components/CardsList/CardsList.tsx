@@ -12,7 +12,7 @@ import {ManageCardsButton} from "./ManageCardsButton";
 
 export const CardsList = () => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
-    const idUser = useSelector<AppStateType, string>(state => state.login._id)
+    const idUser = useSelector<AppStateType, string>(state => state.profile.profile._id)
     const success = useSelector<AppStateType, boolean>(state => state.cardsList.success)
     const dispatch = useDispatch();
     const {id} = useParams<{ id: string }>()
