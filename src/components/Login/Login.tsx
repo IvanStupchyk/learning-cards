@@ -11,8 +11,8 @@ import {MainActionButton} from "../../common/MainActionButton/MainActionButton";
 import {PasswordValidation} from "../../common/validation/passwordValidation";
 
 export const Login = () => {
-    const [emailValue, setEmailValue] = useState<string>('')
-    const [passwordValue, setPasswordValue] = useState<string>('')
+    const [emailValue, setEmailValue] = useState<string>('bovkunovichmarinacv@gmail.com')
+    const [passwordValue, setPasswordValue] = useState<string>('zE0ScWR8ZY')
 
     const dispatch = useDispatch()
     const loadingStatus = useSelector<AppStateType, boolean>(state => state.login.loadingRequest)
