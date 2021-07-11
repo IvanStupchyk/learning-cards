@@ -53,6 +53,7 @@ export const PacksListAPI = {
         return instance.get<resultGetPacksAPIType>(`cards/pack?page=${page}&pageCount=${pageCount}&packName=${packName}&min=${min}&max=${max}${user__id}`)
     },
     addCardsPack(data: addCardsPackDataType) {
+        debugger
         return instance.post<Array<cardsPackType>>('/cards/pack', data)
     },
     deleteCardsPack(params: { id: string }) {
