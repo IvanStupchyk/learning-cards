@@ -17,7 +17,7 @@ type InitialStateType = {
 export const initialState: InitialStateType = {
     cardPacks: [] as cardsPackType[],
     packsParams: {
-        min: 1,
+        min: 0,
         max: 20,
         page: 1,
         pageCount: 15,
@@ -108,10 +108,10 @@ export const getPackList = (params: getPacksAPIParamsType): AppThunkType => asyn
 }
 
 export const addPack = (data: addCardsPackDataType): AppThunkType => async (dispatch: Dispatch<actionPacksListType>,getState:GetAppStateType) => {
-    const {sortPacks,min,max,page,user_id,pageCount} = getState().packsList.packsParams
+    const {sortPacks, min, max, page, user_id, pageCount, packName} = getState().packsList.packsParams
     try {
         const responseAdd = await PacksListAPI.addCardsPack(data)
-        const response = await PacksListAPI.getPacks({pageCount,user_id,page,max,min,sortPacks})
+        const response = await PacksListAPI.getPacks({pageCount, user_id, page, max, min, sortPacks, packName})
         dispatch(GetPacksListAC(response.data.cardPacks))
     } catch (e) {
         const error = e.response
