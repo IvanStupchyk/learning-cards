@@ -5,6 +5,9 @@
   .private {
     align-self: flex-start;
   }
+  .search {
+    align-self: flex-start;
+  }
   .table {
     border: 1px solid black;
   }
@@ -17,4 +20,38 @@
   .tableCol {
     border: 1px solid black;
   }
+}
+.backgroundModal {
+  visibility: hidden;
+  background-color: #81839e;
+  opacity: 0.8;
+  z-index: 20;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+}
+.modalWindowAdd {
+  visibility: hidden;
+  background: linear-gradient(180deg, #E6D4DE, #9890C7) no-repeat;
+  z-index: 21;
+  height: 300px;
+  width: 300px;
+  position: absolute;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .closeModalAdd {
+    align-self: flex-end;
+  }
+  .inputModalAdd {
+    margin-top: 50px;
+    width: 80%;
+  }
+  .addModalAdd {
+    margin-top: 20px;
+  }
+}
+.visibilityWindow {
+  visibility: visible;
 }
