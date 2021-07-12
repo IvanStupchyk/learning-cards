@@ -121,11 +121,12 @@ export const addPack = (data: addCardsPackDataType): AppThunkType => async (disp
     }
 }
 
-export const deletePack = (params: {id: string}): AppThunkType => async (dispatch: Dispatch<actionPacksListType>) => {
-
+export const deletePack = (params: {id: string}): AppThunkType => async (dispatch: Dispatch<actionPacksListType>,getState:GetAppStateType) => {
+    const {sortPacks, min, max, page, user_id, pageCount, packName} = getState().packsList.packsParams
+    const _id = getState().profile.profile._id
     try {
         const responseDelete = await PacksListAPI.deleteCardsPack(params)
-        const response = await PacksListAPI.getPacks({})
+        const response = await PacksListAPI.getPacks({pageCount, user_id: _id, page, max, min, sortPacks, packName})
         dispatch(GetPacksListAC(response.data.cardPacks))
     } catch (e) {
         const error = e.response

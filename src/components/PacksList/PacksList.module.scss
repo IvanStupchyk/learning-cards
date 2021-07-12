@@ -44,14 +44,25 @@
   .closeModalAdd {
     align-self: flex-end;
   }
-  .inputModalAdd {
-    margin-top: 50px;
-    width: 80%;
-  }
+  //.inputModalAdd {
+  //  margin-top: 50px;
+  //  width: 80%;
+  //}
   .addModalAdd {
     margin-top: 20px;
+    background-color: #e33e37;
+    position: relative;
+    z-index: 30;
   }
 }
 .visibilityWindow {
   visibility: visible;
+}
+.search {
+  display: flex;
+  flex-direction: row;
+  .containerInputSearch {
+    display: flex;
+    flex-direction: row;
+  }
 }
