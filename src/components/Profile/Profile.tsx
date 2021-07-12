@@ -6,6 +6,7 @@ import {AuthUser, logOutUser} from "../Login/login-reducer";
 import s from "../Profile/Profile.module.scss";
 import {PersonalInformation} from "./PersonalInformation";
 import {profileResponseType} from "./profile-reducer";
+import {PacksList} from "../PacksList/PacksList";
 
 
 export const Profile = () => {
@@ -50,6 +51,7 @@ export const Profile = () => {
             <div className={s.profilePacksList}>
                 <div className={s.packsListContainer}>
                     <h2>My packs list</h2>
+                    <PacksList user_id={profile._id && profile._id} />
                 </div>
             </div>
             {editModeProfile && <PersonalInformation onClick={closeModelWindow} name={profile.name}
