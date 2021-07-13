@@ -80,12 +80,19 @@ export const loginUserTC = (emailValue: string, passwordValue: string): AppThunk
 }
 
 export const AuthUser = (): AppThunkType => async (dispatch) => {
+    dispatch(loadingRequest(true))
     try {
         const response = await authAPI.me()
 
         dispatch(logIn(true))
         dispatch(setProfileAC(response.data))
     } catch (e) {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console')
+        dispatch(setServerErrorMessageLogin(error))
+    } finally {
+        dispatch(loadingRequest(false))
     }
 }
 
