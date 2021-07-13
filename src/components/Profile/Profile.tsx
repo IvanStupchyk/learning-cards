@@ -15,6 +15,7 @@ export const Profile = () => {
 
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const idUser = useSelector<AppStateType, string>(state => state.login._id)
+    const loadingRequest = useSelector<AppStateType, boolean>(state => state.login.loadingRequest)
     const profile = useSelector<AppStateType, profileResponseType>(state => state.profile.profile)
     const dispatch = useDispatch()
 
@@ -22,7 +23,9 @@ export const Profile = () => {
 
     useEffect(() => {
         if (!idUser) {
-            dispatch(AuthUser())
+            if (!loadingRequest) {
+                dispatch(AuthUser())
+            }
         }
     }, [])
 
@@ -49,10 +52,8 @@ export const Profile = () => {
                 <div className={s.numberOfCards}>Number of cards</div>
             </div>
             <div className={s.profilePacksList}>
-                <div className={s.packsListContainer}>
-                    <h2>My packs list</h2>
-                    <PacksList user_id={profile._id && profile._id} />
-                </div>
+                <h2>My packs list</h2>
+                <PacksList user_id={profile._id && profile._id} />
             </div>
             {editModeProfile && <PersonalInformation onClick={closeModelWindow} name={profile.name}
                                                      avatar={profile.avatar}/>
