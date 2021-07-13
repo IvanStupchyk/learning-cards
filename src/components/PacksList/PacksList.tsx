@@ -10,12 +10,14 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {Pagination} from "../../common/Pagination/Pagination";
 import {ManagePacksButton} from './ManagePacksButton';
 import {InputContainer} from "../../common/InputContainer/InputContainer";
+import {ModalWindow} from "../../common/ModalWindow/ModalWindow";
 
-export const PacksList = (props: {user_id?: string}) => {
+export const PacksList = (props: { user_id?: string }) => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const idUser = useSelector<AppStateType, string>(state => state.profile.profile._id)
     const success = useSelector<AppStateType, boolean>(state => state.packsList.success)
     const [checkedPrivate, setCheckedPrivate] = useState<boolean>(false)
+    const loadingRequest = useSelector<AppStateType, boolean>(state => state.login.loadingRequest)
     const [title, setTitle] = useState<string>("")
     const [packNameTitle, setPackNameTitle] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
@@ -36,7 +38,9 @@ export const PacksList = (props: {user_id?: string}) => {
 
     useEffect(() => {
         if (!idUser) {
-            dispatch(AuthUser())
+            if (!loadingRequest) {
+                dispatch(AuthUser())
+            }
         } else {
             getPrivatePacks()
         }
@@ -96,9 +100,6 @@ export const PacksList = (props: {user_id?: string}) => {
         return <Preloader/>
     }
 
-    const finalModal = showModal ? `${s.modalWindowAdd} ${s.visibilityWindow}` : `${s.modalWindowAdd}`
-    const finalBackgroundModal = showModal ? `${s.backgroundModal} ${s.visibilityWindow}` : `${s.backgroundModal}`
-
     return (
         <>
             <div className={s.flex}>
@@ -116,7 +117,6 @@ export const PacksList = (props: {user_id?: string}) => {
                             typeInput={'text'}
                             value={packNameTitle}
                         />
-                        {/*<input type={'text'} onChange={changeSearch} value={packNameTitle}/>*/}
                         <button onClick={() => {
                             dispatch(setPackNameAC(''))
                         }}>X
@@ -130,11 +130,9 @@ export const PacksList = (props: {user_id?: string}) => {
                         <th className={s.tableHeader}>{"CARDS COUNT"}</th>
                         <th className={s.tableHeader}>{"USER NAME"}</th>
                         <th className={s.tableHeader}>{"UPDATED"}</th>
-                        <th>
-                            {/*<input type={'text'} value={title} onChange={changeTitle} />*/}
-                            {/*<button onClick={addPackFun}>ADD</button>*/}
+                        {props.user_id && <th>
                             <button onClick={() => setShowModal(true)}>ADD</button>
-                        </th>
+                        </th>}
                     </tr>
                     {packsList.map((pack) => (
                         <tr key={pack._id} className={s.tableRow}>
@@ -142,7 +140,6 @@ export const PacksList = (props: {user_id?: string}) => {
                             <td className={s.tableCol}>{pack.cardsCount}</td>
                             <td className={s.tableCol}>{pack.user_name}</td>
                             <td className={s.tableCol}>{pack.updated}</td>
-                            <td className={s.tableCol}>{pack.user_id}</td>
                             {(props.user_id) && <ManagePacksButton _id={pack._id} deletePackFun={deletePackFun}/>}
                             <td><NavLink to={`/cards-list/${pack._id}`} activeClassName={s.activeLink}>cards
                                 list</NavLink>
@@ -156,19 +153,6 @@ export const PacksList = (props: {user_id?: string}) => {
                             currentPage={page}
                             onPageChanged={onPageChangedHandler}
                 />
-            </div>
-            <div className={finalBackgroundModal} onClick={() => setShowModal(false)}></div>
-            <div className={finalModal} >
-                <button className={s.closeModalAdd} onClick={() => setShowModal(false)}>X</button>
-                <InputContainer
-                    placeholder={'Name pack'}
-                    changeValue={changeTitle}
-                    errorMessage={''}
-                    typeInput={'text'}
-                    value={title}
-                />
-                {/*<input className={s.inputModalAdd} type={'text'} value={title} onChange={changeTitle} />*/}
-                <button className={s.addModalAdd} onClick={addPackFun}>ADD</button>
             </div>
         </>
     )

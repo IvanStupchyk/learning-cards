@@ -21,17 +21,28 @@
     border: 1px solid black;
   }
 }
+
+.search {
+  display: flex;
+  flex-direction: row;
+  .containerInputSearch {
+    display: flex;
+    flex-direction: row;
+  }
+}
+.modalContainer {
+  z-index: 15;
+}
 .backgroundModal {
-  visibility: hidden;
+  visibility: visible;
   background-color: #81839e;
   opacity: 0.8;
   z-index: 20;
   height: 100vh;
   width: 100%;
-  position: fixed;
 }
 .modalWindowAdd {
-  visibility: hidden;
+  visibility: visible;
   background: linear-gradient(180deg, #E6D4DE, #9890C7) no-repeat;
   z-index: 21;
   height: 300px;
@@ -44,10 +55,6 @@
   .closeModalAdd {
     align-self: flex-end;
   }
-  //.inputModalAdd {
-  //  margin-top: 50px;
-  //  width: 80%;
-  //}
   .addModalAdd {
     margin-top: 20px;
     background-color: #e33e37;
@@ -57,12 +64,4 @@
 }
 .visibilityWindow {
   visibility: visible;
-}
-.search {
-  display: flex;
-  flex-direction: row;
-  .containerInputSearch {
-    display: flex;
-    flex-direction: row;
-  }
 }
