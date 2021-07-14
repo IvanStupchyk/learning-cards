@@ -109,6 +109,8 @@ export const PacksList = (props: { user_id?: string }) => {
                         <th className={s.tableHeader}>{"NAME"}</th>
                         <th className={s.tableHeader}>{"CARDS COUNT"}</th>
                         <th className={s.tableHeader}>{"USER NAME"}</th>
+                        <th className={s.tableHeader}>{"RATING"}</th>
+                        <th className={s.tableHeader}>{"GRADE"}</th>
                         <th className={s.tableHeader}>{"UPDATED"}</th>
                         {props.user_id && <th>
                             <button onClick={() => setShowModal(true)}>ADD</button>
@@ -119,6 +121,8 @@ export const PacksList = (props: { user_id?: string }) => {
                             <td className={s.tableCol}>{pack.name}</td>
                             <td className={s.tableCol}>{pack.cardsCount}</td>
                             <td className={s.tableCol}>{pack.user_name}</td>
+                            <td className={s.tableCol}>{pack.rating}</td>
+                            <td className={s.tableCol}>{pack.grade}</td>
                             <td className={s.tableCol}>{pack.updated}</td>
                             {(props.user_id) && <ManagePacksButton _id={pack._id} deletePackFun={deletePackFun}/>}
                             <td><NavLink to={`/cards-list/${pack._id}`} activeClassName={s.activeLink}>cards

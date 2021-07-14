@@ -83,8 +83,6 @@ export const packsListReducer = (state = initialState, action: actionPacksListTy
         }
         case "packList/SET-SUCCESS":
             return {...state, success: action.success}
-        // case "packList/ADD-PACK":
-        //     return [...state, {...action.payload}]
         default:
             return state
     }
