@@ -7,6 +7,8 @@ import s from "../Profile/Profile.module.scss";
 import {PersonalInformation} from "./PersonalInformation";
 import {profileResponseType} from "./profile-reducer";
 import {PacksList} from "../PacksList/PacksList";
+import {getPackList} from "../PacksList/packsList-reducer";
+import {getPacksAPIParamsType} from "../../api/api";
 
 
 export const Profile = () => {
@@ -14,7 +16,7 @@ export const Profile = () => {
     const [editModeProfile, setEditModeProfile] = useState<boolean>(false)
 
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
-    const idUser = useSelector<AppStateType, string>(state => state.login._id)
+    const idUser = useSelector<AppStateType, string>(state => state.profile.profile._id)
     const loadingRequest = useSelector<AppStateType, boolean>(state => state.login.loadingRequest)
     const profile = useSelector<AppStateType, profileResponseType>(state => state.profile.profile)
     const dispatch = useDispatch()
@@ -27,7 +29,7 @@ export const Profile = () => {
                 dispatch(AuthUser())
             }
         }
-    }, [])
+    }, [idUser])
 
     const logOut = () => {
         dispatch(logOutUser())
