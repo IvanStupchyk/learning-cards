@@ -10,16 +10,14 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {Pagination} from "../../common/Pagination/Pagination";
 import {ManagePacksButton} from './ManagePacksButton';
 import {InputContainer} from "../../common/InputContainer/InputContainer";
-import {ModalWindow} from "../../common/ModalWindow/ModalWindow";
+import {ModalWindowAdd} from "../../common/ModalWindow/ModalWindowAdd";
 
 export const PacksList = (props: { user_id?: string }) => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const idUser = useSelector<AppStateType, string>(state => state.profile.profile._id)
     const success = useSelector<AppStateType, boolean>(state => state.packsList.success)
-    const [checkedPrivate, setCheckedPrivate] = useState<boolean>(false)
     const loadingRequest = useSelector<AppStateType, boolean>(state => state.login.loadingRequest)
-    const [title, setTitle] = useState<string>("")
-    const [packNameTitle, setPackNameTitle] = useState<string>("")
+    const [searchTitle, setSearchTitle] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
     const [showModal, setShowModal] = useState<boolean>(false)
     const dispatch = useDispatch();
@@ -46,38 +44,20 @@ export const PacksList = (props: { user_id?: string }) => {
         }
     }, [dispatch, page, pageCount, sortPacks, min, max, packName])
 
-
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        error && setError(null)
-        setTitle(e.target.value)
-    }
-
-    const addPackFun = () => {
-        const trimmedTitle = title.trim()
-        if (trimmedTitle) {
-            setCheckedPrivate(false)
-            dispatch(addPack({cardsPack: {name: title}}))
-        } else {
-            setError("Title is required")
-        }
-        setTitle("")
-        setShowModal(false)
-    }
-
     const changeSearch = (e: ChangeEvent<HTMLInputElement>) => {
         error && setError(null)
-        setPackNameTitle(e.currentTarget.value)
+        setSearchTitle(e.currentTarget.value)
     }
 
     const setSearch = () => {
-        const trimmedSearch = packNameTitle.trim()
+        const trimmedSearch = searchTitle.trim()
         if (trimmedSearch) {
             dispatch(setPackNameAC(trimmedSearch))
             getPrivatePacks()
         } else {
             setError("Title is required")
         }
-        setPackNameTitle("")
+        setSearchTitle("")
     }
 
     const deletePackFun = (id: string) => {
@@ -105,7 +85,7 @@ export const PacksList = (props: { user_id?: string }) => {
             <div className={s.flex}>
                 {props.user_id && <div className={s.private}>
                     <input type="checkbox" className="toggle_input" onChange={getPrivatePacks}
-                           checked={checkedPrivate}/>
+                           checked={false}/>
                     <label>private</label>
                 </div>}
                 <div className={s.search}>
@@ -115,7 +95,7 @@ export const PacksList = (props: { user_id?: string }) => {
                             changeValue={changeSearch}
                             errorMessage={''}
                             typeInput={'text'}
-                            value={packNameTitle}
+                            value={searchTitle}
                         />
                         <button onClick={() => {
                             dispatch(setPackNameAC(''))
@@ -154,6 +134,7 @@ export const PacksList = (props: { user_id?: string }) => {
                             onPageChanged={onPageChangedHandler}
                 />
             </div>
+            <ModalWindowAdd showModal={showModal} setShowModal={setShowModal} />
         </>
     )
 }
