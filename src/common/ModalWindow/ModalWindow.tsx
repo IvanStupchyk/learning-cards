@@ -1,12 +1,10 @@
 import React, {DetailedHTMLProps, HTMLAttributes} from "react";
 import s from "./ModalWindow.module.scss";
+import {ModalWindowPropsType} from "./ModalWindowAdd";
 
 type DefaultDivPropsType = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 
-type ModalWindowPropsType = DefaultDivPropsType & {
-    showModal: boolean
-    setShowModal: (showModal: boolean) => void
-}
+type CommonModalWindowPropsType = DefaultDivPropsType & ModalWindowPropsType
 
 export const ModalWindow: React.FC<ModalWindowPropsType> = ({showModal, setShowModal, children}) => {
     const finalModal = showModal ? `${s.modalWindow} ${s.visibilityWindow}` : `${s.modalWindow}`
