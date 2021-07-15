@@ -1,46 +1,17 @@
 .profilePageContainer {
-  max-width: 1008px;
-  min-height: 720px;
   display: flex;
-  justify-content: space-between;
-  border-radius: 8px;
   background-color: #FEFEFF;
-}
-
-.modalBackground {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(180deg, #E6D4DE, #9890C7);
-  z-index: 20;
-  left: 0;
-}
-
-.modalMessage {
-  position: fixed;
-  z-index: 21;
-  padding: 25px;
-  box-sizing: border-box;
-  height: 540px;
-  max-width: 415px;
-  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
   border-radius: 8px;
-  background-color: #F9F9FE;
-  left: calc(50vw - (540px / 2));
-
-  & img {
-    height: 96px;
-    width: 96px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: 50%;
-  }
+  height: 100%;
+  width: 100%;
 }
-
 
 .btns {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
 }
 
@@ -48,6 +19,7 @@
   height: 36px;
   max-width: 125px;
   width: 100%;
+  margin-right: 10px;
   border-radius: 30px;
   display: flex;
   justify-content: center;

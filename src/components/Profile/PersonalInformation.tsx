@@ -1,6 +1,5 @@
 import React, {ChangeEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../state/redux-store";
 import s from "../Profile/PersonalIngormation.module.scss";
 import {MainActionButton} from "../../common/MainActionButton/MainActionButton";
@@ -15,7 +14,6 @@ type PersonalInformationPropsType = {
 
 export const PersonalInformation = React.memo((props: PersonalInformationPropsType) => {
     const loadingStatus = useSelector<AppStateType, boolean>(state => state.registration.loadingRequest)
-    const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
     const dispatch = useDispatch()
 
     const [newName, setNewName] = useState<string>(props.name)
@@ -49,47 +47,38 @@ export const PersonalInformation = React.memo((props: PersonalInformationPropsTy
         }
     }
 
-    if (!isAuth) return <Redirect to={'/login'}/>
-
-    return (
+   return (
         <div className={s.profilePageContainer}>
-            <>
-                <div className={s.modalBackground} onClick={closeModelWindow}>
-                </div>
-                <div className={s.modalMessage}>
-                    <div className={s.modalMessageContainer}>
-                        <h2>Personal information</h2>
-                        <img src={urlAvatar && urlAvatar ? urlAvatar : ''} alt="user_photo"/>
-                        <div className={s.inputFields}>
-                            <InputContainer
-                                title={'Nick name'}
-                                typeInput={'text'}
-                                value={newName}
-                                changeValue={onChangeName}
-                                errorMessage={errorNickName}
+
+                    <h2>Personal information</h2>
+                    <img src={urlAvatar && urlAvatar ? urlAvatar : ''} alt="user_photo"/>
+                    <div className={s.inputFields}>
+                        <InputContainer
+                            title={'Nick name'}
+                            typeInput={'text'}
+                            value={newName}
+                            changeValue={onChangeName}
+                            errorMessage={errorNickName}
+                        />
+                        <InputContainer
+                            title={'URL photo'}
+                            typeInput={'text'}
+                            value={urlAvatar}
+                            changeValue={onChangeAvatar}
+                            errorMessage={errorUrlAvatar}
+                        />
+                    </div>
+                    <div className={s.btns}>
+                        <a className={s.btnCancel} onClick={closeModelWindow}>Cancel</a>
+                        <div className={s.blueBtnContainer}>
+                            <MainActionButton
+                                actionClick={onSaveInformation}
+                                disabledBtnSubmit={disabledBtnSubmit}
+                                title={'Save'}
+                                loadingStatus={loadingStatus}
                             />
-                            <InputContainer
-                                title={'URL photo'}
-                                typeInput={'text'}
-                                value={urlAvatar}
-                                changeValue={onChangeAvatar}
-                                errorMessage={errorUrlAvatar}
-                            />
-                        </div>
-                        <div className={s.btns}>
-                            <a className={s.btnCancel} onClick={closeModelWindow}>Cancel</a>
-                            <div className={s.blueBtnContainer}>
-                                <MainActionButton
-                                    actionClick={onSaveInformation}
-                                    disabledBtnSubmit={disabledBtnSubmit}
-                                    title={'Save'}
-                                    loadingStatus={loadingStatus}
-                                />
-                            </div>
                         </div>
                     </div>
-                </div>
-            </>
         </div>
     )
 })

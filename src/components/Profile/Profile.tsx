@@ -9,6 +9,7 @@ import {profileResponseType} from "./profile-reducer";
 import {PacksList} from "../PacksList/PacksList";
 import {getPackList} from "../PacksList/packsList-reducer";
 import {getPacksAPIParamsType} from "../../api/api";
+import {ModalWindowProfile} from "../../common/ModalWindow/ModalWindowProfile";
 
 
 export const Profile = () => {
@@ -55,10 +56,13 @@ export const Profile = () => {
             </div>
             <div className={s.profilePacksList}>
                 <h2>My packs list</h2>
-                <PacksList user_id={profile._id && profile._id} />
+                <PacksList user_id={profile._id && profile._id}/>
             </div>
-            {editModeProfile && <PersonalInformation onClick={closeModelWindow} name={profile.name}
-                                                     avatar={profile.avatar}/>
+            {editModeProfile && <ModalWindowProfile onClick={closeModelWindow} height={540} width={415}>
+                <PersonalInformation onClick={closeModelWindow} name={profile.name}
+                                     avatar={profile.avatar}/>
+            </ModalWindowProfile>
+
             }
         </div>
     )
