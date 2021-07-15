@@ -25,7 +25,7 @@ export const ModalWindowUpdate: React.FC<ModalWindowPropsType> = (props) => {
     const updatePackFun = () => {
         const trimmedPackName = packNameTitle.trim()
         if (trimmedPackName) {
-            dispatch(updatePack({_id: props.packId, name: trimmedPackName}))
+            dispatch(updatePack({cardsPack:{_id: props.packId, name: trimmedPackName}}))
         } else {
             setError("Title is required")
         }

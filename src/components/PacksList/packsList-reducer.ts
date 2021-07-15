@@ -134,7 +134,7 @@ export const deletePack = (params: {id: string}): AppThunkType => async (dispatc
     }
 }
 
-export const updatePack = (data: { _id: string, name?: string }): AppThunkType => async (dispatch: Dispatch<actionPacksListType>,getState:GetAppStateType) => {
+export const updatePack = (data: { cardsPack: { _id: string, name?: string } }): AppThunkType => async (dispatch: Dispatch<actionPacksListType>,getState:GetAppStateType) => {
     const {sortPacks, min, max, page, user_id, pageCount, packName} = getState().packsList.packsParams
     const _id = getState().profile.profile._id
     try {
