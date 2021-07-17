@@ -1,4 +1,5 @@
 import React from "react";
+import {MainActionButton} from "../../common/MainActionButton/MainActionButton";
 
 type ManageButtonPropsType = {
     _id: string
@@ -10,10 +11,12 @@ export const ManageCardsButton: React.FC<ManageButtonPropsType> = (props) => {
     return (
         <>
             <td>
-                <button id={props._id} onClick={() => props.deleteCardFun(props._id, props.cardPack_id)}>DELETE</button>
+                <MainActionButton actionClick={() => props.deleteCardFun(props._id, props.cardPack_id)}
+                                  title={"DELETE"}/>
             </td>
             <td>
-                <button id={props._id}>UPDATE</button>
+                <MainActionButton actionClick={() => {}}
+                                  title={"UPDATE"}/>
             </td>
         </>
     )
