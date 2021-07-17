@@ -22,24 +22,20 @@ function App() {
                 <Navbar />
                 <main className={'mainContainer'}>
                     <Switch>
-
+                        <Route exact path={'/'} render={() => <Profile/>}/>
                         <Route path={'/learning-cards/'} render={() => <div>Hi!</div>}/>
                         <Route exact path={'/login'} render={() => <Login/>}/>
-                        <Route exact path={'/profile'} render={() => <Profile/>}/>
+                        <Route path={'/profile'} render={() => <Profile/>}/>
                         <Route path={'/new-password/:token'} render={() => <EnterNewPassword/>}/>
                         <Route exact path={'/password-recovery'} render={() => <PasswordRecovery/>}/>
                         <Route path={'/password-recovery-check-email/:email'} render={() => <CheckEmail/>}/>
                         <Route exact path={'/registration'} render={() => <Registration/>}/>
-                        {/*<Route exact path={'/test-components'} render={() => <TestComponents/>}/>*/}
                         <Route exact path={'/packs-list'} render={() => <PacksList/>}/>
                         <Route exact path={'/cards-list/:id'} render={() => <CardsList/>}/>
                         <Route path={'*'} render={() => <Error404/>}/>
                     </Switch>
                 </main>
             </div>
-
-
-
     );
 }
 
