@@ -120,11 +120,26 @@ export const addPack = (data: addCardsPackDataType): AppThunkType => async (disp
 }
 
 export const deletePack = (params: {id: string}): AppThunkType => async (dispatch: Dispatch<actionPacksListType>,getState:GetAppStateType) => {
-    const {sortPacks, min, max, page, user_id, pageCount, packName} = getState().packsList.packsParams
+    const {sortPacks, min, max, page, pageCount, packName} = getState().packsList.packsParams
     const _id = getState().profile.profile._id
     try {
         const responseDelete = await PacksListAPI.deleteCardsPack(params)
         const response = await PacksListAPI.getPacks({pageCount, user_id: _id, page, max, min, sortPacks, packName})
+        dispatch(GetPacksListAC(response.data.cardPacks))
+    } catch (e) {
+        const error = e.response
+            ? e.response.data.error
+            : (e.message + ', more details in the console');
+    } finally {
+    }
+}
+
+export const updatePack = (data: { cardsPack: { _id: string, name?: string } }): AppThunkType => async (dispatch: Dispatch<actionPacksListType>,getState:GetAppStateType) => {
+    const {sortPacks, min, max, page, user_id, pageCount, packName} = getState().packsList.packsParams
+    const _id = getState().profile.profile._id
+    try {
+        const responseUpdate = await PacksListAPI.changeCardsPack(data)
+        const response = await PacksListAPI.getPacks({pageCount, user_id, page, max, min, sortPacks, packName})
         dispatch(GetPacksListAC(response.data.cardPacks))
     } catch (e) {
         const error = e.response

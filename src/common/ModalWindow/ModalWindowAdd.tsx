@@ -56,7 +56,7 @@ export const ModalWindowAdd: React.FC<ModalWindowPropsType> = (props) => {
 
     return <ModalWindow showModal={props.showModal} setShowModal={props.setShowModal}>
         <InputContainer
-            placeholder={"Name pack"}
+            placeholder={"Pack name"}
             changeValue={changePackName}
             errorMessage={""}
             typeInput={"text"}
@@ -78,8 +78,7 @@ export const ModalWindowAdd: React.FC<ModalWindowPropsType> = (props) => {
         />
         <div className={s.addModalAdd}>
             <MainActionButton actionClick={addPackFun}
-                              title={"ADD"}
-            />
+                              title={"ADD"}/>
         </div>
     </ModalWindow>;
 }

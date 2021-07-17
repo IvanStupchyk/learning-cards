@@ -1,7 +1,7 @@
 import s from './PacksList.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
-import {addPack, deletePack, getPackList, setPackNameAC, setPageNumberAC} from "./packsList-reducer";
+import {addPack, deletePack, getPackList, setPackNameAC, setPageNumberAC, updatePack} from "./packsList-reducer";
 import {AppStateType} from "../../state/redux-store";
 import {cardsPackType, getPacksAPIParamsType} from "../../api/api";
 import {NavLink, Redirect} from "react-router-dom";
@@ -11,6 +11,8 @@ import {Pagination} from "../../common/Pagination/Pagination";
 import {ManagePacksButton} from './ManagePacksButton';
 import {InputContainer} from "../../common/InputContainer/InputContainer";
 import {ModalWindowAdd} from "../../common/ModalWindow/ModalWindowAdd";
+import {ModalWindowUpdate} from "../../common/ModalWindow/ModalWindowUpdate";
+import {MainActionButton} from "../../common/MainActionButton/MainActionButton";
 
 export const PacksList = (props: { user_id?: string }) => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
@@ -19,7 +21,8 @@ export const PacksList = (props: { user_id?: string }) => {
     const loadingRequest = useSelector<AppStateType, boolean>(state => state.login.loadingRequest)
     const [searchTitle, setSearchTitle] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
-    const [showModal, setShowModal] = useState<boolean>(false)
+    const [showModalAdd, setShowModalAdd] = useState<boolean>(false)
+    const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false)
     const dispatch = useDispatch();
 
     const {
@@ -60,8 +63,8 @@ export const PacksList = (props: { user_id?: string }) => {
         setSearchTitle("")
     }
 
-    const deletePackFun = (id: string) => {
-        dispatch(deletePack({id}))
+    const deletePackFun = (pack_id: string) => {
+        dispatch(deletePack({id: pack_id}))
     }
 
     const getPrivatePacks = () => {
@@ -113,7 +116,8 @@ export const PacksList = (props: { user_id?: string }) => {
                         <th className={s.tableHeader}>{"GRADE"}</th>
                         <th className={s.tableHeader}>{"UPDATED"}</th>
                         {props.user_id && <th>
-                            <button onClick={() => setShowModal(true)}>ADD</button>
+                            <MainActionButton actionClick={() => setShowModalAdd(true)}
+                                              title={"ADD"}/>
                         </th>}
                     </tr>
                     {packsList.map((pack) => (
@@ -124,7 +128,7 @@ export const PacksList = (props: { user_id?: string }) => {
                             <td className={s.tableCol}>{pack.rating}</td>
                             <td className={s.tableCol}>{pack.grade}</td>
                             <td className={s.tableCol}>{pack.updated}</td>
-                            {(props.user_id) && <ManagePacksButton _id={pack._id} deletePackFun={deletePackFun}/>}
+                            {(props.user_id) && <ManagePacksButton _id={pack._id} deletePackFun={deletePackFun} />}
                             <td><NavLink to={`/cards-list/${pack._id}`} activeClassName={s.activeLink}>cards
                                 list</NavLink>
                             </td>
@@ -138,7 +142,7 @@ export const PacksList = (props: { user_id?: string }) => {
                             onPageChanged={onPageChangedHandler}
                 />
             </div>
-            <ModalWindowAdd showModal={showModal} setShowModal={setShowModal} />
+            <ModalWindowAdd showModal={showModalAdd} setShowModal={setShowModalAdd} />
         </>
     )
 }
