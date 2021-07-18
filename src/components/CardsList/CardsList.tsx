@@ -9,6 +9,7 @@ import {AuthUser} from "../Login/login-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {addPack} from "../PacksList/packsList-reducer";
 import {ManageCardsButton} from "./ManageCardsButton";
+import {MainActionButton} from "../../common/MainActionButton/MainActionButton";
 
 export const CardsList = () => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.login.logIn)
@@ -39,9 +40,6 @@ export const CardsList = () => {
         return <Redirect to={'/login'}/>
     }
 
-    // if (!cardsList.length) {
-    //     return <Preloader/>
-    // }
     if (!success) {
         return <Preloader/>
     }
@@ -49,22 +47,17 @@ export const CardsList = () => {
     return (
         <table className={s.table}>
             <tr className={s.tableRow}>
-                {/*{Object.keys(cardsList[0]).map((key) => (*/}
-                {/*    <th>{key}</th>*/}
-                {/*))}*/}
                 <th className={s.tableHeader}>{"QUESTION"}</th>
                 <th className={s.tableHeader}>{"ANSWER"}</th>
                 <th className={s.tableHeader}>{"GRADE"}</th>
                 <th className={s.tableHeader}>{"UPDATED"}</th>
                 <th>
-                    <button onClick={addCardFun}>ADD</button>
+                    <MainActionButton actionClick={addCardFun}
+                                      title={"ADD"}/>
                 </th>
             </tr>
             {cardsList.map((card) => (
                 <tr key={card._id} className={s.tableRow}>
-                    {/*{Object.values(card).map((val) => (*/}
-                    {/*    <td>{val}</td>*/}
-                    {/*))}*/}
                     <td className={s.tableCol}>{card.question}</td>
                     <td className={s.tableCol}>{card.answer}</td>
                     <td className={s.tableCol}>{card.grade}</td>
