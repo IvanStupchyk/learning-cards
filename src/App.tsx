@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
-import {TestComponents} from "./components/TestComponents/Test-components";
 import {Route, Switch} from "react-router-dom";
 import {Login} from "./components/Login/Login";
 import {Profile} from "./components/Profile/Profile";
@@ -12,8 +11,7 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {CheckEmail} from "./components/PasswordRecovery/ChekEmail";
 import {PacksList} from "./components/PacksList/PacksList";
 import { CardsList } from './components/CardsList/CardsList';
-import {useSelector} from "react-redux";
-import {AppStateType} from "./state/redux-store";
+import {Learn} from "./components/Learn/Learn";
 
 function App() {
     const auth = true
@@ -22,7 +20,6 @@ function App() {
                 <Navbar />
                 <main className={'mainContainer'}>
                     <Switch>
-
                         <Route path={'/learning-cards/'} render={() => <div>Hi!</div>}/>
                         <Route exact path={'/login'} render={() => <Login/>}/>
                         <Route exact path={'/profile'} render={() => <Profile/>}/>
@@ -33,6 +30,7 @@ function App() {
                         {/*<Route exact path={'/test-components'} render={() => <TestComponents/>}/>*/}
                         <Route exact path={'/packs-list'} render={() => <PacksList/>}/>
                         <Route exact path={'/cards-list/:id'} render={() => <CardsList/>}/>
+                        <Route exact path={'/learn/:id'} render={() => <Learn />}/>
                         <Route path={'*'} render={() => <Error404/>}/>
                     </Switch>
                 </main>

@@ -48,7 +48,7 @@ export const authAPI = {
 }
 export const PacksListAPI = {
     getPacks(params: getPacksAPIParamsType) {
-        const {page,max,min,packName,pageCount,user_id} = params
+        const {page, max, min, packName, pageCount, user_id} = params
         const user__id = user_id !== undefined ? `&user_id=${user_id}` : ''
         return instance.get<resultGetPacksAPIType>(`cards/pack?page=${page}&pageCount=${pageCount}&packName=${packName}&min=${min}&max=${max}${user__id}`)
     },
@@ -76,6 +76,9 @@ export const CardsListAPI = {
     changeCard(data: { _id: string, question?: string, comments?: string }) {
         return instance.put<Array<cardType>>('/cards/card', data)
     },
+    setCardGrade(grade: number, card_id: string) {
+        return instance.put<SetGradeResponseType>('/cards/grade', {grade, card_id})
+    },
 }
 
 //TYPES=====
@@ -95,7 +98,7 @@ export type loginResponseType = {
 }
 
 //profileAPI
-export type profileResponseType={
+export type profileResponseType = {
     updatedUser: loginResponseType
     error?: string
     token: string
@@ -139,6 +142,7 @@ type addedUserType = {
 
 //PacksListAPI
 type cardAndPackType = "pack" | "folder" | "card"
+
 export type cardsPackType = {
     _id: string
     user_id: string
@@ -153,6 +157,7 @@ export type cardsPackType = {
     created: string
     updated: string
     __v?: number
+
 }
 export type getPacksAPIParamsType = {
     packName?: string
@@ -185,18 +190,22 @@ export type addCardsPackDataType = {
 
 //CardsListAPI
 export type cardType = {
-    answer: string
-    question: string
+    answer?: string
+    question?: string
     cardsPack_id: string
     grade: number
-    shots: number
     rating?: number
+    shots?: number
     type?: cardAndPackType
-    created: string
-    updated: string
+    more_id: string
+    user_id: string
+    created?: string
+    updated?: string
+    comment: string,
     __v?: number
     _id: string
 }
+
 export type getCardsAPIParamsType = {
     cardAnswer?: string
     cardQuestion?: string
@@ -228,5 +237,17 @@ export type addCardDataType = {
         questionImg?: string
         questionVideo?: string
         type?: cardAndPackType
+    }
+}
+
+//LearnAPI
+type SetGradeResponseType = {
+    updatedGrade: {
+        _id: string
+        cardsPack_id: string
+        card_id: string
+        user_id: string
+        grade: number
+        shots: number
     }
 }

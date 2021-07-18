@@ -7,8 +7,6 @@ import s from "../Profile/Profile.module.scss";
 import {PersonalInformation} from "./PersonalInformation";
 import {profileResponseType} from "./profile-reducer";
 import {PacksList} from "../PacksList/PacksList";
-import {getPackList} from "../PacksList/packsList-reducer";
-import {getPacksAPIParamsType} from "../../api/api";
 import {ModalWindowProfile} from "../../common/ModalWindow/ModalWindowProfile";
 
 

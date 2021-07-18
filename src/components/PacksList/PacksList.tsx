@@ -1,17 +1,16 @@
 import s from './PacksList.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
-import {addPack, deletePack, getPackList, setPackNameAC, setPageNumberAC, updatePack} from "./packsList-reducer";
+import {deletePack, getPackList, setPackNameAC, setPageNumberAC} from "./packsList-reducer";
 import {AppStateType} from "../../state/redux-store";
 import {cardsPackType, getPacksAPIParamsType} from "../../api/api";
-import {NavLink, Redirect} from "react-router-dom";
+import {NavLink, Redirect, useHistory} from "react-router-dom";
 import {AuthUser} from "../Login/login-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {Pagination} from "../../common/Pagination/Pagination";
 import {ManagePacksButton} from './ManagePacksButton';
 import {InputContainer} from "../../common/InputContainer/InputContainer";
 import {ModalWindowAdd} from "../../common/ModalWindow/ModalWindowAdd";
-import {ModalWindowUpdate} from "../../common/ModalWindow/ModalWindowUpdate";
 import {MainActionButton} from "../../common/MainActionButton/MainActionButton";
 
 export const PacksList = (props: { user_id?: string }) => {
@@ -22,7 +21,6 @@ export const PacksList = (props: { user_id?: string }) => {
     const [searchTitle, setSearchTitle] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
     const [showModalAdd, setShowModalAdd] = useState<boolean>(false)
-    const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false)
     const dispatch = useDispatch();
 
     const {
@@ -36,6 +34,13 @@ export const PacksList = (props: { user_id?: string }) => {
     const onPageChangedHandler = useCallback((currentPage: number): void => {
         dispatch(setPageNumberAC(currentPage))
     }, [page])
+
+
+    let history = useHistory();
+
+    function onLearnButtonClick(id: string) {
+        history.push(`/learn/${id}`);
+    }
 
     useEffect(() => {
         if (!idUser) {
@@ -131,7 +136,9 @@ export const PacksList = (props: { user_id?: string }) => {
                             {(props.user_id) && <ManagePacksButton _id={pack._id} deletePackFun={deletePackFun} />}
                             <td><NavLink to={`/cards-list/${pack._id}`} activeClassName={s.activeLink}>cards
                                 list</NavLink>
+                                <NavLink to={`/learn/${pack._id}`} activeClassName={s.activeLink}>Learn</NavLink>
                             </td>
+
                         </tr>
                     ))}
                 </table>

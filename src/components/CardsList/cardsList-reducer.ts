@@ -1,29 +1,37 @@
-import {
-    addCardDataType,
-    addCardsPackDataType,
-    CardsListAPI,
-    cardType, getCardsAPIParamsType,
-    PacksListAPI,
-} from "../../api/api";
+import {addCardDataType, CardsListAPI, cardType, getCardsAPIParamsType,} from "../../api/api";
 import {AppThunkType, GetAppStateType} from "../../state/redux-store";
 import {Dispatch} from "redux";
-import {actionPacksListType, GetPacksListAC} from "../PacksList/packsList-reducer";
 
 const initialState = {
     arrayCard: [] as Array<cardType>,
+    grade: 0,
+    sortCards: "" as string,
+    maxGrade: 1000 as number | undefined,
+    minGrade: 0 as number | undefined,
+    page: 1,
+    pageCount: 5,
+    cardsTotalCount: 100,
+    cardsPack_id: "",
+    searchVal: "",
+    sort: "",
+    question: "",
+    searchCardQuestion: "" as string | undefined,
     success: false
 }
 
 //types
 type initialStateType = typeof initialState
 type GetCardsListAT = ReturnType<typeof GetCardsListAC>
-
-export type actionCardsListType = GetCardsListAT | SetSuccessAT
+type setGradeCardAT = ReturnType<typeof setGradeCardAC>
 type SetSuccessAT = ReturnType<typeof SetSuccessAC>
+
+export type actionCardsListType = GetCardsListAT | SetSuccessAT | setGradeCardAT
+
 
 //actionC
 export const GetCardsListAC = (params: Array<cardType>) => ({type: 'cardList/GET-CARDSLIST', params} as const)
 export const SetSuccessAC = (success: boolean) => ({type: 'cardList/SET-SUCCESS', success} as const)
+export const setGradeCardAC = (grade: number) => ({ type: "SET-GRADE", grade } as const);
 
 export const cardsListReducer = (state = initialState, action: actionCardsListType): initialStateType => {
     switch (action.type) {
@@ -31,6 +39,9 @@ export const cardsListReducer = (state = initialState, action: actionCardsListTy
             return {...state, arrayCard: action.params.map(cl => ({...cl}))}
         case "cardList/SET-SUCCESS":
             return {...state, success: action.success}
+        case "SET-GRADE": {
+            return { ...state, grade: action.grade };
+        }
         default:
             return state
     }
@@ -79,4 +90,15 @@ export const deleteCard = (params: {id: string, cardPack_id: string}): AppThunkT
     } finally {
     }
 }
+
+export const gradeCardTC = (grade:number, card_id:string) => async (dispatch: Dispatch<actionCardsListType>) => {
+
+    try {
+        await CardsListAPI.setCardGrade(grade, card_id)
+    } catch (e) {
+        console.log('GRADE_CARD_ERROR: ', {...e})
+    } finally {
+    }
+}
+
 

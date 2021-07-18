@@ -5,6 +5,8 @@ type ModalWindowProfilePropsType = {
     onClick: () => void
     width: number
     height: number
+    title?: string
+    isOpen?: boolean
 }
 
 export const ModalWindowProfile: React.FC<ModalWindowProfilePropsType> = (props) => {
